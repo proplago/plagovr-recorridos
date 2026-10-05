@@ -159,12 +159,40 @@
 <div id="load"><div class="in"><div class="eyebrow">PLAGO VR</div><div style="font-size:20px;font-weight:600;margin-top:4px">El Jalisciense · Piso 29</div><div id="ltxt" style="color:var(--ink2);margin-top:6px">Cargando maqueta…</div><div class="bar"><i id="lbar"></i></div></div></div>
 
 <script>
-// diagnóstico: si algo falla, se muestra en la pantalla de carga en vez de quedarse en blanco
-window.__fail=function(e){ try{ var t=document.getElementById('ltxt'); if(t){ t.innerHTML='No se pudo abrir la maqueta en este navegador.<br><small style="color:#b3261e">'+String((e&&(e.message||e.reason&&e.reason.message))||e).slice(0,220)+'</small><br><small>Prueba abrir la liga en Safari o Chrome (no dentro de WhatsApp) o en una computadora.</small>'; } var b=document.getElementById('lbar'); if(b) b.style.background='#b3261e'; }catch(_){} };
-window.addEventListener('error',function(e){ window.__fail(e.error||e.message); });
-window.addEventListener('unhandledrejection',function(e){ window.__fail(e.reason); });
-(function(){ try{ var c=document.createElement('canvas'); if(!(c.getContext('webgl2')||c.getContext('webgl'))) setTimeout(function(){ window.__fail('Este dispositivo no tiene WebGL activo.'); },0); }catch(e){} })();
+// diagnóstico y respaldo: 1) error → reintenta en modo ligero; 2) si vuelve a fallar → versión sin 3D (planos y datos)
+(function(){
+var q=location.search, SAFE=/[?&]safe/.test(q); try{ if(sessionStorage.getItem('elj_safe')) SAFE=true; }catch(e){}
+function msg(e){ return String((e&&(e.message||(e.reason&&e.reason.message)))||e||'').slice(0,200); }
+window.__fail=function(e){
+  if(window.__ok||window.__failed) return; window.__failed=true;
+  var m=msg(e), st=window.__stage||'inicio';
+  if(!SAFE){ try{ sessionStorage.setItem('elj_safe','1'); }catch(_){} location.replace(location.pathname+'?safe=1&from='+encodeURIComponent(st+': '+m)); return; }
+  window.__fallback(st+': '+m);
+};
+window.__fallback=function(why){
+  var L=document.getElementById('load'); if(!L) return;
+  L.style.overflow='auto'; L.style.placeItems='start center';
+  L.innerHTML='<div style="max-width:560px;padding:20px 16px;font:15px/1.45 Helvetica,Arial,sans-serif;color:#191919">'+
+   '<div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#8e8e8e;font-weight:600">PLAGO VR · El Jalisciense piso 29</div>'+
+   '<h2 style="margin:6px 0 6px;font-size:20px">Versión sin 3D</h2>'+
+   '<p style="color:#595959;margin:0 0 12px">Este navegador no pudo abrir la maqueta 3D. Aquí están los planos y los datos. Para la maqueta, ábrela en Chrome o Safari actualizados, o en una computadora.</p>'+
+   '<div id="fbk"></div><img src="data/zonas.png" alt="Zonas" style="width:100%;border:1px solid #e3e3e3;margin:10px 0">'+
+   '<div style="display:flex;gap:8px"><figure style="margin:0;flex:1"><img src="data/holgura_good.png" style="width:100%;border:1px solid #e3e3e3"><figcaption style="font-size:12px;color:#595959">Holgura Good</figcaption></figure>'+
+   '<figure style="margin:0;flex:1"><img src="data/holgura_best.png" style="width:100%;border:1px solid #e3e3e3"><figcaption style="font-size:12px;color:#595959">Holgura Best</figcaption></figure></div>'+
+   '<p style="font-size:11px;color:#b3261e;margin-top:14px">Detalle técnico: '+String(why).replace(/</g,'&lt;')+'</p>'+
+   '<p style="font-size:11px;color:#8e8e8e">'+navigator.userAgent+'</p>'+
+   '<a href="'+location.pathname+'?retry=1" onclick="try{sessionStorage.removeItem(\'elj_safe\')}catch(e){}" style="display:inline-block;margin-top:6px;padding:10px 14px;border:1px solid #191919;border-radius:3px;color:#191919;text-decoration:none">Reintentar 3D</a></div>';
+  var x=new XMLHttpRequest(); x.open('GET','data/analisis.json'); x.onload=function(){ try{ var d=JSON.parse(x.responseText), g=d.opciones.good.kpi, b=d.opciones.best.kpi;
+    var r=function(l,a,c){ return '<tr><td style="padding:6px 0;border-bottom:1px solid #e9e9e9">'+l+'</td><td style="text-align:right;border-bottom:1px solid #e9e9e9"><b>'+a+'</b></td><td style="text-align:right;border-bottom:1px solid #e9e9e9"><b>'+c+'</b></td></tr>'; };
+    document.getElementById('fbk').innerHTML='<table style="width:100%;border-collapse:collapse;font-size:14px"><tr><th></th><th style="text-align:right">GOOD</th><th style="text-align:right">BEST</th></tr>'+
+      r('Asientos',g.asientos,b.asientos)+r('Huella de mobiliario',g.huella_m2+' m²',b.huella_m2+' m²')+r('Rutas con paso ≥ 0.90 m',g.rutas_090_pct+' %',b.rutas_090_pct+' %')+r('Caminata mediana',g.caminata_mediana_m+' m',b.caminata_mediana_m+' m')+'</table>'; }catch(e){} }; x.send();
+};
+window.addEventListener('error',function(e){ if(!window.__ok) window.__fail(e.error||e.message); });
+window.addEventListener('unhandledrejection',function(e){ if(!window.__ok) window.__fail(e.reason); });
+try{ var c=document.createElement('canvas'); if(!c.getContext('webgl2')) setTimeout(function(){ window.__failed=true; window.__fallback('Este navegador no tiene WebGL 2 (necesario para el 3D).'); },0); }catch(e){}
+setTimeout(function(){ if(!window.__ok && !window.__failed) window.__fail('Tardó más de 60 s en la etapa “'+(window.__stage||'?')+'”'); },60000);
+})();
 </script>
-<script src="app.js?v=3"></script>
+<script src="app.js?v=4"></script>
 </body>
 </html>
