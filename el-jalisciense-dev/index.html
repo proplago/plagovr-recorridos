@@ -53,7 +53,7 @@
   details{margin-top:8px} summary{cursor:pointer;font-size:12px;color:var(--ink2)}
   details ul{padding-left:16px;margin:6px 0;font-size:11.5px;color:var(--mute)}
   /* tarjeta del punto de interés */
-  #card{position:fixed;left:16px;bottom:88px;width:340px;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:16px 18px 12px;z-index:9;transition:opacity .25s,transform .25s}
+  #card{position:fixed;left:16px;bottom:88px;width:340px;max-height:calc(100vh - 170px);overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:16px 18px 12px;z-index:10;transition:opacity .25s,transform .25s}
   #card.fade{opacity:0;transform:translateY(6px)}
   #card h3{margin:4px 0 4px;font-size:20px;font-weight:600;letter-spacing:-.01em}
   #card p{margin:0 0 8px;color:var(--ink2);font-size:13px}
@@ -97,6 +97,10 @@
   #load .bar{height:2px;background:var(--line);margin-top:14px}
   #load .bar i{display:block;height:100%;width:0;background:var(--ink);transition:width .2s}
   .mtoggle{display:none}
+  #card .x{position:absolute;right:8px;top:8px;width:30px;height:30px;border:0;background:none;font-size:20px;line-height:1;cursor:pointer;color:var(--ink2)}
+  #card .chipsm{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--acc);border-radius:3px;padding:3px 6px;margin-right:6px}
+  #card .alt{margin-top:8px;font-size:12.5px;color:var(--ink2)} #card .alt a{color:var(--acc);cursor:pointer;text-decoration:none}
+  #card .pend{margin-top:6px;font-size:11.5px;color:var(--mute)}
   @media (max-width:900px){
     header{gap:8px;padding:0 10px;height:58px}.ttl b{font-size:15px}.ttl .eyebrow{display:none}#cmp{display:none}
     .seg button{min-width:58px;padding:9px 10px}
@@ -148,7 +152,7 @@
   <div class="g">
     <div><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="11"/><path d="M8 13a14 14 0 0 1 6-5M32 27a14 14 0 0 1-6 5"/><path d="M14 8l0 4 4 0M26 32l0-4-4 0"/></svg><b>Girar</b>Arrastra con el mouse o un dedo.</div>
     <div><svg viewBox="0 0 40 40"><rect x="13" y="6" width="14" height="22" rx="7"/><path d="M20 11v5M20 32v4M16 34l4 3 4-3"/></svg><b>Acercar</b>Rueda del mouse o pellizca. El acercamiento está limitado.</div>
-    <div><svg viewBox="0 0 40 40"><circle cx="11" cy="20" r="6"/><path d="M11 17.5v5"/><path d="M22 20h12M29 15l5 5-5 5"/></svg><b>Recorrer</b>Toca un número o usa ‹ ›. Casita = vista general.</div>
+    <div><svg viewBox="0 0 40 40"><circle cx="11" cy="20" r="6"/><path d="M11 17.5v5"/><path d="M22 20h12M29 15l5 5-5 5"/></svg><b>Recorrer</b>Toca un número o usa ‹ ›. Casita = vista general. Toca un mueble para ver su ficha y todos los de su modelo.</div>
   </div>
   <button class="btn on" id="hintOk">Entendido</button>
 </div></div>
@@ -237,7 +241,7 @@ const DEPTH=addCut(new THREE.MeshDepthMaterial({depthPacking:THREE.RGBADepthPack
 const labelR=new CSS2DRenderer(); Object.assign(labelR.domElement.style,{position:'fixed',left:'0',top:'0',pointerEvents:'none',zIndex:'7'}); document.body.appendChild(labelR.domElement);
 
 // ---------- datos
-const data=await fetch('data/analisis.json').then(r=>r.json());
+const [data,CAT]=await Promise.all([fetch('data/analisis.json').then(r=>r.json()),fetch('data/catalogo.json').then(r=>r.json()).catch(()=>({modelos:{}}))]);
 const SP=data.espacios, OPT=data.opciones;
 
 // ---------- modelos
@@ -332,7 +336,7 @@ function showOption(o,instant=false){
   $('oGood').classList.toggle('on',o==='good'); $('oBest').classList.toggle('on',o==='best');
   anim={t0:performance.now(), items:swaps.map((s,i)=>({out:o==='good'?s.b:s.g, inn:o==='good'?s.g:s.b, delay:i*22}))};
   if(instant){ anim.items.forEach(it=>{ setNode(it.out,0); setNode(it.inn,1); }); anim=null; }
-  renderKPI(); renderCard(); updateLayer();
+  remapSel(); renderKPI(); renderCard(); updateLayer();
 }
 function stepAnim(now){
   if(!anim) return; let done=true;
@@ -380,7 +384,7 @@ function buildLabels(){ labels.children.slice().forEach(o=>{ o.element.remove();
     const o=new CSS2DObject(el); o.position.copy(P2W((x0+x1)/2,(y0+y1)/2,1.5)); labels.add(o); } }
 
 // ---------- indicadores generales
-function delta(a,b,inv=false,unit='',d=0){ if(a==null||b==null) return ''; const df=a-b; if(Math.abs(df)<1e-9) return '<small class="eq">=</small>';
+function delta(a,b,inv=false,unit='',d=0){ if(a==null||b==null) return ''; const df=a-b; if(Math.abs(df)<0.5*Math.pow(10,-d)) return '<small class="eq">=</small>';
   const good=inv?df<0:df>0; return `<small class="${good?'up':'down'}">${df>0?'▲':'▼'} ${fmt(Math.abs(df),d)}${unit}</small>`; }
 function renderKPI(){
   const K=OPT[option].kpi, O=OPT[option==='good'?'best':'good'].kpi;
@@ -448,6 +452,7 @@ function stepFly(now){
 }
 // tarjeta del punto
 function renderCard(){
+  if(sel){ renderFicha(); return; }
   const s=STOPS[cur], el=$('card');
   if(s.k==='general'){
     const a=OPT.good.kpi, b=OPT.best.kpi;
@@ -491,6 +496,75 @@ canvas.addEventListener('wheel',()=>{ stopPlay(); hideHint(); },{passive:true});
 addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return;
   if(e.code==='ArrowRight'){stopPlay();goStop(cur+1);} else if(e.code==='ArrowLeft'){stopPlay();goStop(cur-1);}
   else if(e.code==='KeyH'||e.code==='Home'){stopPlay();goStop(0);} else if(e.code==='KeyG') showOption('good'); else if(e.code==='KeyB') showOption('best'); });
+
+
+// ---------- fichas por modelo: toca un mueble → se resaltan todos los de su modelo + mini ficha
+const PZ={good:{},best:{}}; for(const o of ['good','best']) for(const p of OPT[o].piezas) PZ[o][p.id]=p;
+const PAIR={good:{},best:{}}; for(const p of data.pares){ if(p.g!=null&&p.b!=null){ PAIR.good[p.g]=p.b; PAIR.best[p.b]=p.g; } }
+const keyOf=(o,p)=>{ const k=o+':'+p.def, c=CAT.modelos[k]; return (c&&c.grupo)||k; };
+const catOf=(o,p)=>CAT.modelos[o+':'+p.def]||{nombre:'Pieza '+p.def,categoria:p.tipo};
+let sel=null;                         // {op, key, ids:[...]}
+const HL=new THREE.Group(); scene.add(HL); const hlMats=new Map(), swapped=[];
+const ringMat=new THREE.MeshBasicMaterial({color:0x266de8,transparent:true,opacity:0.85,depthWrite:false,toneMapped:false,fog:false});
+function clearHL(){ for(const [m,orig] of swapped) m.material=orig; swapped.length=0; HL.clear(); }
+function hlMat(m){ let h=hlMats.get(m); if(!h){ h=m.clone(); h.emissive=new THREE.Color(0x266de8); h.emissiveIntensity=0.45; addCut(h); hlMats.set(m,h); } return h; }
+function nodeFor(op,id){ return pieceNodes[op][id] || (id>=1000 ? pieceNodes.good[id-1000] : null); }
+function select(op,key){
+  clearHL(); if(!key){ sel=null; renderCard(); return; }
+  const ids=OPT[op].piezas.filter(p=>keyOf(op,p)===key).map(p=>p.id); sel={op,key,ids};
+  for(const id of ids){ const n=nodeFor(op,id), p=PZ[op][id]; if(!n) continue;
+    n.traverse(o=>{ if(o.isMesh){ swapped.push([o,o.material]); o.material=hlMat(o.material); } });
+    const r=Math.max(p.size[0],p.size[1])/2+0.18; const ring=new THREE.Mesh(new THREE.RingGeometry(r,r+0.09,40),ringMat);
+    ring.rotation.x=-Math.PI/2; ring.position.copy(P2W(p.c[0],p.c[1],0.02)); ring.renderOrder=8; HL.add(ring); }
+  renderCard();
+}
+function remapSel(){ if(!sel) return; const was=sel; const other=option;
+  if(was.op===other){ select(other,was.key); return; }
+  const q=was.ids.map(id=>PAIR[was.op][id]).find(v=>v!=null && PZ[other][v]);
+  if(q!=null) select(other,keyOf(other,PZ[other][q])); else select(null,null); }
+function renderFicha(){
+  const {op,key,ids}=sel, P=ids.map(id=>PZ[op][id]), c=catOf(op,P[0]), el=$('card');
+  const esp={}; P.forEach(p=>{ const n=p.espacio?SP[p.espacio].nombre:'Otras áreas'; esp[n]=(esp[n]||0)+1; });
+  const m=P.reduce((a,p)=>p.size[0]*p.size[1]<a.size[0]*a.size[1]?p:a,P[0]);       // instancia menos rotada ≈ medida real
+  const asi=P.reduce((a,p)=>a+(p.asientos||0),0);
+  const huella=P.reduce((a,p)=>a+p.size[0]*p.size[1],0);
+  const otherOp=op==='good'?'best':'good';
+  const cls=t=>/sillon|sofa|banco/.test(t)?'asiento':/lampara|otro/.test(t)?'luz':'mesa';
+  const alt=[...new Set(ids.map(id=>PAIR[op][id]).filter(v=>v!=null&&PZ[otherOp][v]&&cls(PZ[otherOp][v].tipo)===cls(P[0].tipo)).map(v=>keyOf(otherOp,PZ[otherOp][v])))];
+  const altTxt=alt.length? alt.map(k=>{ const p=OPT[otherOp].piezas.find(x=>keyOf(otherOp,x)===k); return `<a data-alt="${k}">${catOf(otherOp,p).nombre}</a>`; }).join(', ') : 'sin equivalente directo';
+  const marca=[c.marca,c.modelo].filter(Boolean).join(' · ');
+  el.innerHTML=`<button class="x" aria-label="Cerrar ficha">×</button>
+    <div class="eyebrow"><span class="chipsm">${op==='good'?'Good':'Best'}</span>${c.categoria||''}</div>
+    <h3>${c.nombre}</h3><p>${marca||'Marca y modelo por confirmar con la lista de partes de CET.'}${c.clave?` · Clave ${c.clave}`:''}</p>
+    <table class="sp">
+      <tr><td>Cantidad en la opción</td><td class="cur">${P.length}</td></tr>
+      <tr><td>Dónde</td><td>${Object.entries(esp).map(([n,k])=>`${n} (${k})`).join('<br>')}</td></tr>
+      <tr><td>Medida aprox. (frente × fondo × alto)</td><td>${fmt(m.size[0],2)} × ${fmt(m.size[1],2)} × ${fmt(m.size[2],2)} m</td></tr>
+      ${asi?`<tr><td>Lugares sentados</td><td>${asi}</td></tr>`:''}
+      <tr><td>Huella total</td><td>${fmt(huella,1)} m²</td></tr>
+      ${c.acabados?`<tr><td>Acabados</td><td>${c.acabados}</td></tr>`:''}
+    </table>
+    <div class="alt">En ${otherOp==='good'?'Good':'Best'}: ${altTxt}</div>
+    ${c.url?`<div class="note"><a href="${c.url}" target="_blank" rel="noopener">Ver ficha del fabricante ↗</a></div>`:''}
+    ${c.notas?`<div class="pend">${c.notas}</div>`:''}`;
+  el.querySelector('.x').onclick=()=>select(null,null);
+  el.querySelectorAll('[data-alt]').forEach(a=>a.onclick=()=>{ const k=a.dataset.alt; showOption(otherOp); select(otherOp,k); });
+}
+// clic (sin arrastrar) sobre un mueble
+const ray=new THREE.Raycaster(), ndc=new THREE.Vector2(); let down=null;
+canvas.addEventListener('pointerdown',e=>{ down=[e.clientX,e.clientY]; });
+canvas.addEventListener('pointerup',e=>{ if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>6||fly) return; down=null;
+  const r=canvas.getBoundingClientRect(); ndc.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); ray.setFromCamera(ndc,camera);
+  const vis=o=>{ for(let x=o;x;x=x.parent) if(!x.visible) return false; return true; };
+  const hit=ray.intersectObjects([GOOD,BEST],true).find(h=>vis(h.object) && h.point.y<2.4);
+  if(!hit){ if(sel) select(null,null); return; }
+  let n=hit.object; while(n && !/^P_\d+/.test(n.name)) n=n.parent; if(!n) return;
+  const inGood=(()=>{ for(let x=n;x;x=x.parent) if(x===GOOD) return true; return false; })();
+  let op=inGood?'good':'best', id=+/^P_(\d+)/.exec(n.name)[1];
+  if(op!==option){ const q = option==='best' ? (PZ.best[1000+id]?1000+id:PAIR.good[id]) : PAIR.best[id]; if(q!=null && PZ[option][q]){ op=option; id=q; } }   // piezas comunes / iguales
+  const p=PZ[op][id]; if(!p) return;
+  const k=keyOf(op,p); if(sel && sel.key===k) select(null,null); else select(op,k);
+});
 
 // ---------- comparar (cortina)
 let compare=false, splitX=0.5, splitDrag=false;
@@ -541,7 +615,7 @@ renderer.setAnimationLoop(()=>{
   } else renderer.render(scene,camera);
   labelR.render(scene,camera);
 });
-window.__elj={THREE,scene,camera,renderer,orbit,showOption,setCompare,goStop,applyStyle,data,get cur(){return cur;}};
+window.__elj={THREE,scene,camera,renderer,orbit,GOOD,BEST,showOption,setCompare,goStop,applyStyle,data,get cur(){return cur;}};
 </script>
 </body>
 </html>

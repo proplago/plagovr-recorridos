@@ -1,0 +1,377 @@
+{
+ "_nota": "Nombres descriptivos provisionales. Marca, modelo, clave y liga se llenan con la lista de partes de CET (pedir a David). Campos: nombre, categoria, grupo, marca, modelo, clave, url, acabados, notas.",
+ "modelos": {
+  "good:463": {
+   "nombre": "Silla lounge tapizada con patas de madera",
+   "categoria": "Silla",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "good:468": {
+   "nombre": "Sillón lounge giratorio de respaldo alto",
+   "categoria": "Sillón",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "good:504": {
+   "nombre": "Silla ejecutiva de respaldo alto",
+   "categoria": "Silla de trabajo / juntas",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "good:527": {
+   "nombre": "Sillón tipo tub tapizado",
+   "categoria": "Sillón",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "good:531": {
+   "nombre": "Sofá modular de piel",
+   "categoria": "Sofá",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": "",
+   "grupo": "good:sofa_mod"
+  },
+  "good:536": {
+   "nombre": "Sofá modular de piel",
+   "categoria": "Sofá",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": "",
+   "grupo": "good:sofa_mod"
+  },
+  "good:497": {
+   "nombre": "Banco alto de barra",
+   "categoria": "Banco alto",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "good:523": {
+   "nombre": "Mesa redonda de pedestal (bistró)",
+   "categoria": "Mesa",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "good:134": {
+   "nombre": "Mesa redonda de pedestal",
+   "categoria": "Mesa",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "good:138": {
+   "nombre": "Mesa de centro redonda, base de cruz",
+   "categoria": "Mesa de centro",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "good:146": {
+   "nombre": "Mesa de centro redonda chica, base de cruz",
+   "categoria": "Mesa de centro",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "good:141": {
+   "nombre": "Mesa de centro redonda, base de cruz",
+   "categoria": "Mesa de centro",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "good:144": {
+   "nombre": "Mesa lateral de aro",
+   "categoria": "Mesa lateral",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "good:149": {
+   "nombre": "Mesa lateral de aro",
+   "categoria": "Mesa lateral",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "good:40": {
+   "nombre": "Mesa de juntas ovalada",
+   "categoria": "Mesa de juntas",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "good:156#2": {
+   "nombre": "Candil de anillo",
+   "categoria": "Iluminación decorativa",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": "Decorativo, no es mobiliario Steelcase."
+  },
+  "good:186#1": {
+   "nombre": "Candil de anillo",
+   "categoria": "Iluminación decorativa",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": "Decorativo, no es mobiliario Steelcase."
+  },
+  "good:163": {
+   "nombre": "Lámpara de arco de piso",
+   "categoria": "Iluminación decorativa",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": "Decorativo, no es mobiliario Steelcase."
+  },
+  "good:172": {
+   "nombre": "Lámpara de piso de globo",
+   "categoria": "Iluminación decorativa",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": "Decorativo, no es mobiliario Steelcase."
+  },
+  "best:311": {
+   "nombre": "Silla de respaldo alto con base de aluminio",
+   "categoria": "Silla de trabajo / juntas",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "best:301": {
+   "nombre": "Sillón de brazos con marco de madera",
+   "categoria": "Sillón",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "best:373": {
+   "nombre": "Sillón lounge giratorio de piel",
+   "categoria": "Sillón",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "best:377": {
+   "nombre": "Sillón lounge giratorio de piel",
+   "categoria": "Sillón",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "best:344": {
+   "nombre": "Sofá tapizado de respaldo alto, 3 plazas",
+   "categoria": "Sofá",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "best:276": {
+   "nombre": "Sofá tapizado de respaldo alto",
+   "categoria": "Sofá",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "best:307": {
+   "nombre": "Banco alto de barra tapizado",
+   "categoria": "Banco alto",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "best:340": {
+   "nombre": "Mesa redonda de pedestal (bistró)",
+   "categoria": "Mesa",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "best:272": {
+   "nombre": "Mesa redonda de pedestal",
+   "categoria": "Mesa",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "best:40": {
+   "nombre": "Mesa de centro redonda, base de cruz",
+   "categoria": "Mesa de centro",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "best:43": {
+   "nombre": "Mesa de centro redonda chica, base de cruz",
+   "categoria": "Mesa de centro",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "best:48": {
+   "nombre": "Mesa de centro redonda, base de cruz",
+   "categoria": "Mesa de centro",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "best:295": {
+   "nombre": "Mesa lateral de aro",
+   "categoria": "Mesa lateral",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "best:40_G": {
+   "nombre": "Mesa de juntas ovalada",
+   "categoria": "Mesa de juntas",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": ""
+  },
+  "best:68#2": {
+   "nombre": "Candil de anillo",
+   "categoria": "Iluminación decorativa",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": "Decorativo, no es mobiliario Steelcase."
+  },
+  "best:51#2": {
+   "nombre": "Candil de anillo",
+   "categoria": "Iluminación decorativa",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": "Decorativo, no es mobiliario Steelcase."
+  },
+  "best:80": {
+   "nombre": "Lámpara de arco de piso",
+   "categoria": "Iluminación decorativa",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": "Decorativo, no es mobiliario Steelcase."
+  },
+  "best:75": {
+   "nombre": "Lámpara de piso de globo",
+   "categoria": "Iluminación decorativa",
+   "marca": "",
+   "modelo": "",
+   "clave": "",
+   "url": "",
+   "acabados": "",
+   "notas": "Decorativo, no es mobiliario Steelcase."
+  }
+ }
+}
