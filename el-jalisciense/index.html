@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>El Jalisciense · Piso 29 — Opciones de mobiliario</title>
+<meta name="description" content="Recorrido interactivo: comparación de las opciones GOOD y BEST de mobiliario con estudios de ocupación, holgura, tráfico y luz natural.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="brand/plagovr.png">
+<style>
+  :root{--ink:#191919;--ink2:#595959;--mute:#8e8e8e;--line:#e3e3e3;--line2:#e9e9e9;--band:#f6f6f6;--paper:#fff;--acc:#266de8;--good:#191919;--best:#191919;--up:#2e7d32;--down:#b3261e}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--band);color:var(--ink);font:14px/1.45 "Helvetica Neue",Helvetica,Arial,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased}
+  #c{position:fixed;inset:0;width:100%;height:100%;display:block;outline:none;touch-action:none}
+  header{position:fixed;left:0;right:0;top:0;height:64px;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:24px;padding:0 24px;z-index:10}
+  .ttl{display:flex;flex-direction:column;line-height:1.15}
+  .eyebrow{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);font-weight:600}
+  .ttl b{font-size:20px;font-weight:600;letter-spacing:-.01em}
+  .spacer{flex:1}
+  .seg{display:inline-flex;border:1px solid var(--ink);border-radius:3px;overflow:hidden}
+  .seg button{background:var(--paper);color:var(--ink);border:0;border-right:1px solid var(--ink);padding:9px 18px;font:600 13px/1 inherit;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;min-width:82px}
+  .seg button:last-child{border-right:0}
+  .seg button.on{background:var(--ink);color:#fff}
+  .btn{background:var(--paper);border:1px solid var(--ink);border-radius:3px;padding:8px 14px;font:500 13px/1 inherit;color:var(--ink);cursor:pointer}
+  .btn.on{background:var(--ink);color:#fff}
+  .btn:focus-visible,.seg button:focus-visible,.chip:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+  aside.left{position:fixed;left:16px;top:80px;width:244px;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:16px;z-index:9;max-height:calc(100vh - 160px);overflow:auto}
+  aside.left h4,#kpi h4{margin:14px 0 8px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);font-weight:600}
+  aside.left h4:first-child{margin-top:0}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{background:var(--paper);border:1px solid #b8b8b8;border-radius:3px;padding:6px 10px;font:13px/1.1 inherit;color:var(--ink);cursor:pointer}
+  .chip.on{border-color:var(--ink);background:var(--ink);color:#fff}
+  .legend{margin-top:10px;font-size:12px;color:var(--ink2);display:none}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  .legend div{margin:2px 0}
+  #kpi{position:fixed;right:16px;top:80px;width:340px;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:18px 18px 12px;z-index:9;max-height:calc(100vh - 160px);overflow:auto}
+  #kpi .opt{font-size:22px;font-weight:600;letter-spacing:-.01em;margin:2px 0 2px}
+  #kpi .sub{color:var(--ink2);font-size:12.5px;margin-bottom:6px}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-top:1px solid var(--line2)}
+  .row .l{font-size:13px;color:var(--ink2)}
+  .row .v{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .row .v small{font-size:12px;font-weight:600;margin-left:6px}
+  .up{color:var(--up)} .down{color:var(--down)} .eq{color:var(--mute)}
+  table.sp{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px}
+  table.sp th{text-align:right;padding-left:10px !important;font-weight:600;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.04em;padding:6px 0;border-bottom:1px solid var(--line)}
+  table.sp th:first-child,table.sp td:first-child{text-align:left}
+  table.sp td{text-align:right;padding-left:10px;padding:7px 0;border-bottom:1px solid var(--line2);font-variant-numeric:tabular-nums}
+  .note{font-size:11.5px;color:var(--mute);margin-top:10px}
+  .note a{color:var(--acc);text-decoration:none}
+  details{margin-top:8px} summary{cursor:pointer;font-size:12px;color:var(--ink2)}
+  details ul{padding-left:16px;margin:6px 0;font-size:11.5px;color:var(--mute)}
+  #split{position:fixed;top:64px;bottom:0;width:2px;background:var(--ink);z-index:8;display:none;cursor:ew-resize}
+  #split span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--ink);color:#fff;font:600 11px/1 inherit;letter-spacing:.05em;padding:7px 9px;border-radius:3px;white-space:nowrap}
+  .tag{position:fixed;top:78px;z-index:8;background:var(--ink);color:#fff;font:600 11px/1 inherit;letter-spacing:.06em;padding:6px 8px;border-radius:3px;display:none;text-transform:uppercase}
+  #help{position:fixed;left:16px;bottom:14px;z-index:9;color:var(--ink2);font-size:12px;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:3px;padding:7px 10px;max-width:520px}
+  #wm{position:fixed;right:18px;bottom:14px;z-index:11;width:132px;opacity:.9;pointer-events:none;user-select:none}
+  #load{position:fixed;inset:0;background:var(--paper);display:grid;place-items:center;z-index:20;transition:opacity .5s}
+  #load.hide{opacity:0;pointer-events:none}
+  #load .in{width:min(420px,80vw)}
+  #load .bar{height:2px;background:var(--line);margin-top:14px}
+  #load .bar i{display:block;height:100%;width:0;background:var(--ink);transition:width .2s}
+  .lab{font:12px/1.2 "Helvetica Neue",Helvetica,Arial,sans-serif;background:#fff;border:1px solid var(--ink);padding:5px 8px;border-radius:3px;white-space:nowrap;color:var(--ink);transform:translateY(-8px)}
+  .lab b{display:block;font-weight:600;font-size:12px}
+  .lab span{color:var(--ink2);font-size:11px}
+  .mtoggle{display:none}
+  @media (max-width:900px){
+    header{gap:12px;padding:0 12px}.ttl b{font-size:16px}#cmp{display:none}
+    aside.left{top:auto;bottom:64px;left:8px;right:8px;width:auto;max-height:34vh;padding:12px}
+    #kpi{top:72px;left:8px;right:8px;width:auto;max-height:40vh;display:none}#kpi.show{display:block}
+    .mtoggle{display:inline-block}#help{display:none}#wm{width:96px;bottom:8px;right:10px}
+  }
+</style>
+</head>
+<body>
+<canvas id="c" tabindex="0" aria-label="Maqueta 3D interactiva del piso 29"></canvas>
+<header>
+  <div class="ttl"><span class="eyebrow">Recorrido interactivo · Piso 29</span><b>El Jalisciense</b></div>
+  <div class="spacer"></div>
+  <div class="seg" role="group" aria-label="Opción de mobiliario"><button id="oGood" class="on">Good</button><button id="oBest">Best</button></div>
+  <button class="btn" id="cmp" title="Comparar las dos opciones con una cortina">Comparar</button>
+  <button class="btn mtoggle" id="kpiBtn">Indicadores</button>
+</header>
+<aside class="left" aria-label="Controles">
+  <h4>Vista</h4>
+  <div class="chips"><button class="chip on" data-v="air">Aérea</button><button class="chip" data-v="walk">Recorrido</button></div>
+  <h4>Espacios</h4>
+  <div class="chips" id="spaces"></div>
+  <h4>Estudios</h4>
+  <div class="chips"><button class="chip on" data-l="none">Ninguno</button><button class="chip" data-l="zonas">Zonas</button><button class="chip" data-l="holgura">Holgura</button><button class="chip" data-l="trafico">Tráfico</button><button class="chip" data-l="luz">Luz natural</button></div>
+  <div class="legend" id="legend"></div>
+  <h4>Estilo</h4>
+  <div class="chips"><button class="chip on" data-s="maq">Maqueta</button><button class="chip" data-s="real">Materiales</button></div>
+</aside>
+<section id="kpi" aria-live="polite"></section>
+<div id="split"><span>GOOD ⟷ BEST</span></div>
+<div class="tag" id="tagL">Good</div><div class="tag" id="tagR">Best</div>
+<div id="help">Aérea: arrastra para girar, rueda para acercar. Recorrido: arrastra para mirar, W A S D o flechas para caminar.</div>
+<img id="wm" src="brand/plagovr.png" alt="PLAGO VR">
+<div id="load"><div class="in"><div class="eyebrow">PLAGO VR</div><div style="font-size:20px;font-weight:600;margin-top:4px">El Jalisciense · Piso 29</div><div id="ltxt" style="color:var(--ink2);margin-top:6px">Cargando maqueta…</div><div class="bar"><i id="lbar"></i></div></div></div>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+import {CSS2DRenderer, CSS2DObject} from 'three/addons/renderers/CSS2DRenderer.js';
+
+const $=id=>document.getElementById(id);
+const fmt=(n,d=0)=>Number(n).toLocaleString('es-MX',{minimumFractionDigits:d,maximumFractionDigits:d});
+const P2W=(x,y,h=0)=>new THREE.Vector3(x,h,-y);          // plano (x,y) → three (x, h, -y)
+
+// ---------- render
+const canvas=$('c');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});
+const LITE=new URLSearchParams(location.search).has('lite')||matchMedia('(max-width:900px)').matches;
+renderer.setPixelRatio(LITE?1:Math.min(devicePixelRatio,1.75));
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=0.95;
+renderer.shadowMap.enabled=!LITE; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.localClippingEnabled=true;
+const scene=new THREE.Scene(); scene.background=new THREE.Color(0xf6f6f6);
+const pmrem=new THREE.PMREMGenerator(renderer);
+scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture; scene.environmentIntensity=0.45;
+scene.add(new THREE.HemisphereLight(0xffffff,0xe8e2d8,1.15));
+const sun=new THREE.DirectionalLight(0xfff4e6,1.6); sun.position.set(6,30,-60); sun.target.position.set(20,0,-30);
+sun.castShadow=true; sun.shadow.mapSize.set(2048,2048); Object.assign(sun.shadow.camera,{left:-26,right:26,top:26,bottom:-26,near:1,far:120}); sun.shadow.bias=-0.0005; sun.shadow.normalBias=0.02;
+scene.add(sun,sun.target);
+const camera=new THREE.PerspectiveCamera(50,1,0.05,400);
+const orbit=new OrbitControls(camera,canvas); orbit.enableDamping=true; orbit.maxPolarAngle=Math.PI*0.47; orbit.minDistance=4; orbit.maxDistance=90;
+const CUT=new THREE.Plane(new THREE.Vector3(0,-1,0),2.85);          // corte de maqueta (quita plafones y mezzanine)
+const labelR=new CSS2DRenderer(); Object.assign(labelR.domElement.style,{position:'fixed',left:'0',top:'0',pointerEvents:'none',zIndex:'7'}); document.body.appendChild(labelR.domElement);
+
+// ---------- datos
+const data=await fetch('data/analisis.json').then(r=>r.json());
+const SP=data.espacios, OPT=data.opciones;
+const VIEWS={
+  vestibulo:{n:'Vestíbulo',eye:[20.4,26.2],at:[20.4,36]},
+  salon:{n:'Salón',eye:[21.6,28.4],at:[21.0,37.5]},
+  sala_consejo:{n:'Sala de consejo',eye:[12.2,34.0],at:[8.4,37.6]},
+  cigar:{n:'Cigar room',eye:[28.1,34.1],at:[31.2,37.6]},
+  sala_juntas:{n:'Sala de juntas',eye:[33.3,34.1],at:[38.6,37.4]},
+};
+
+// ---------- modelos
+const draco=new DRACOLoader(); draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/libs/draco/gltf/');
+const loader=new GLTFLoader(); loader.setDRACOLoader(draco);
+const files=['models/ELJ_ARQ.glb','models/ELJ_GOOD.glb','models/ELJ_BEST.glb'];
+const prog=[0,0,0]; const upd=()=>{ $('lbar').style.width=(100*prog.reduce((a,b)=>a+b,0)/3).toFixed(0)+'%'; };
+const [gA,gG,gB]=await Promise.all(files.map((f,i)=>loader.loadAsync(f,e=>{ if(e.total){prog[i]=e.loaded/e.total;upd();} })));
+$('ltxt').textContent='Preparando escena…';
+const ARQ=gA.scene, GOOD=gG.scene, BEST=gB.scene; scene.add(ARQ,GOOD,BEST);
+
+// materiales: maqueta (arquitectura en tono arcilla) y materiales originales
+const CLAY=new THREE.Color(0xeae6df), FLOOR=new THREE.Color(0xd8d1c6);
+const mats=[];
+function isGlass(m){ return (m.transparent && m.opacity<0.9) || /glass|vidrio|cristal|translucent/i.test(m.name||''); }
+ARQ.traverse(o=>{ if(!o.isMesh) return; o.receiveShadow=true;
+  const arr=Array.isArray(o.material)?o.material:[o.material];
+  arr.forEach(m=>{ if(m.userData.done) return; m.userData.done=true;
+    const glass=isGlass(m);
+    const maq=glass ? new THREE.MeshPhysicalMaterial({color:0xdfe8ec,transparent:true,opacity:0.18,roughness:0.05,depthWrite:false,side:THREE.DoubleSide})
+                    : new THREE.MeshStandardMaterial({color:CLAY.clone(),roughness:0.92,metalness:0,side:THREE.DoubleSide});
+    if(!glass){ const c=m.color.clone(); const hsl={}; c.getHSL(hsl); maq.color.setHSL(0.09,0.10,THREE.MathUtils.clamp(0.62+hsl.l*0.3,0.62,0.93)); }
+    const real=m; real.side=THREE.DoubleSide; if(glass){ real.transparent=true; real.opacity=Math.min(real.opacity,0.25); real.depthWrite=false; }
+    mats.push({mesh:o, real, maq});
+  });
+});
+// piso como plano limpio para la maqueta (sombra suave)
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(40.2,38.6),new THREE.MeshStandardMaterial({color:FLOOR,roughness:1}));
+floor.rotation.x=-Math.PI/2; floor.position.set(20.45,0.003,-19.65); floor.receiveShadow=true; scene.add(floor);
+[GOOD,BEST].forEach(g=>g.traverse(o=>{ if(o.isMesh){ o.castShadow=true; o.receiveShadow=true;
+  const arr=Array.isArray(o.material)?o.material:[o.material]; arr.forEach(m=>{ m.side=THREE.DoubleSide; }); }}));
+let style='maq';
+function applyStyle(s){ style=s;
+  for(const e of mats){ const arr=Array.isArray(e.mesh.material)?e.mesh.material:[e.mesh.material];
+    e.mesh.material = Array.isArray(e.mesh.material) ? arr.map(m=> m===e.real||m===e.maq ? (s==='maq'?e.maq:e.real) : m) : (s==='maq'?e.maq:e.real); }
+  floor.visible = s==='maq';
+  document.querySelectorAll('[data-s]').forEach(b=>b.classList.toggle('on',b.dataset.s===s));
+}
+// clipping (solo maqueta aérea)
+function setClip(on){ const planes=on?[CUT]:[]; scene.traverse(o=>{ if(o.isMesh){ (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{ m.clippingPlanes=planes; }); }});
+  mats.forEach(e=>{ e.real.clippingPlanes=planes; e.maq.clippingPlanes=planes; }); }
+
+// ---------- piezas y animación GOOD ↔ BEST
+const pieceNodes={good:{},best:{}};
+GOOD.children.forEach(n=>{ const m=/^P_(\d+)/.exec(n.name); if(m) pieceNodes.good[+m[1]]=n; });
+BEST.children.forEach(n=>{ const m=/^P_(\d+)/.exec(n.name); if(m) pieceNodes.best[+m[1]]=n; });
+const common=new Set(data.comunes_good||[]);
+const swaps=[];                        // {g:node|null, b:node|null, d}
+const center=P2W(20.4,33);
+for(const p of data.pares){
+  const g=p.g!=null?pieceNodes.good[p.g]:null, b=p.b!=null?pieceNodes.best[p.b]:null;
+  if(p.igual && g && b){ b.visible=false; b.userData.hidden=true; g.userData.static=true; continue; }      // misma pieza en ambas: no se anima
+  if(g && common.has(p.g) && !b){ g.userData.static=true; continue; }                                    // mesa común
+  const ref=(g||b).position; swaps.push({g,b,d:ref.distanceTo(center)});
+}
+swaps.sort((a,b)=>a.d-b.d);
+let option='good', anim=null;
+function setNode(n,k){ if(!n) return; n.visible=k>0.001; const s=0.85+0.15*Math.min(k,1); n.scale.set(s,Math.max(k,0.0001),s); n.position.y=(1-Math.min(k,1))*-0.05; }
+const ease={out:t=>1-Math.pow(1-t,3), back:t=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2);}};
+function showOption(o,instant=false){
+  if(o===option && !instant) return; option=o;
+  $('oGood').classList.toggle('on',o==='good'); $('oBest').classList.toggle('on',o==='best');
+  const t0=performance.now();
+  anim={t0, items:swaps.map((s,i)=>({out:o==='good'?s.b:s.g, inn:o==='good'?s.g:s.b, delay:i*22}))};
+  if(instant){ anim.items.forEach(it=>{ setNode(it.out,0); setNode(it.inn,1); }); anim=null; }
+  renderKPI(); updateLayer();
+}
+function stepAnim(now){
+  if(!anim) return; let done=true;
+  for(const it of anim.items){
+    const t=(now-anim.t0-it.delay)/1000;
+    const a=THREE.MathUtils.clamp(t/0.32,0,1), b=THREE.MathUtils.clamp((t-0.22)/0.48,0,1);
+    setNode(it.out,1-ease.out(a)); setNode(it.inn,b<=0?0:ease.back(b));
+    if(b<1) done=false;
+  }
+  if(done){ anim.items.forEach(it=>{ setNode(it.out,0); setNode(it.inn,1); }); anim=null; }
+}
+
+// ---------- capas de estudios (plano sobre el piso)
+const g=data.grid, WM=g.W*g.G, HM=g.H*g.G;
+const tl=new THREE.TextureLoader(); const tex={};
+for(const k of ['zonas','holgura_good','holgura_best','trafico_good','trafico_best']){ const t=tl.load('data/'+k+'.png'); t.colorSpace=THREE.SRGBColorSpace; t.magFilter=k.startsWith('trafico')?THREE.LinearFilter:THREE.NearestFilter; tex[k]=t; }
+const lmat=new THREE.MeshBasicMaterial({transparent:true,depthWrite:false,toneMapped:false,polygonOffset:true,polygonOffsetFactor:-4});
+const lplane=new THREE.Mesh(new THREE.PlaneGeometry(WM,HM),lmat); lplane.rotation.x=-Math.PI/2; lplane.position.set(g.x0+WM/2,0.03,-(g.ytop-HM/2)); lplane.renderOrder=5; lplane.visible=false; scene.add(lplane);
+const dots=new THREE.Group(); scene.add(dots);
+const labels=new THREE.Group(); scene.add(labels);
+let layer='none';
+const LEG={
+  zonas:'<div><i style="background:#8c5cd9"></i>Salas</div><div><i style="background:#4a8fe3"></i>Salón biblioteca + bar</div><div><i style="background:#f29e33"></i>Cigar room</div>',
+  holgura:'<div><b>Ancho libre entre muebles</b></div><div><i style="background:#d64541"></i>&lt; 0.60 m</div><div><i style="background:#f2a93b"></i>0.60 – 0.90 m</div><div><i style="background:#99c478"></i>0.90 – 1.20 m</div><div><i style="background:#468c6e"></i>&gt; 1.20 m</div>',
+  trafico:'<div><b>Rutas desde el vestíbulo a cada asiento</b></div><div style="height:6px;border-radius:2px;background:linear-gradient(90deg,#000004,#781c6d,#ed6925,#fcffa4);margin:6px 0"></div><div style="display:flex;justify-content:space-between"><span>poco paso</span><span>mucho paso</span></div>',
+  luz:'<div><b>Distancia del asiento a la fachada</b></div><div><i style="background:#f2c230"></i>≤ 7.5 m</div><div><i style="background:#7a8fb8"></i>&gt; 7.5 m</div>'
+};
+function updateLayer(){
+  const show=layer!=='none'; lplane.visible=show && layer!=='luz';
+  if(layer==='zonas') lmat.map=tex.zonas; else if(layer==='holgura') lmat.map=tex['holgura_'+option]; else if(layer==='trafico') lmat.map=tex['trafico_'+option];
+  lmat.opacity= layer==='trafico'?1:0.9; lmat.needsUpdate=true;
+  dots.clear();
+  if(layer==='luz'){ const cg=new THREE.CircleGeometry(0.16,20);
+    const ma=new THREE.MeshBasicMaterial({color:0xf2c230,toneMapped:false}), mb=new THREE.MeshBasicMaterial({color:0x7a8fb8,toneMapped:false});
+    for(const [x,y,s] of OPT[option].asientos_xy){ const d=Math.min(x-0.6,40.3-x,y-0.5,38.95-y);
+      const m=new THREE.Mesh(cg,d<=7.5?ma:mb); m.rotation.x=-Math.PI/2; m.position.copy(P2W(x,y,1.25)); m.renderOrder=9; dots.add(m); } }
+  labels.visible = layer==='zonas';
+  const L=$('legend'); L.style.display=show?'block':'none'; L.innerHTML=LEG[layer]||'';
+  document.querySelectorAll('[data-l]').forEach(b=>b.classList.toggle('on',b.dataset.l===layer));
+}
+function buildLabels(){ labels.children.slice().forEach(o=>{ o.element.remove(); labels.remove(o); });
+  for(const [k,s] of Object.entries(SP)){ const [x0,x1,y0,y1]=s.rect; const v=OPT[option].kpi.por_espacio[k];
+    const el=document.createElement('div'); el.className='lab'; el.innerHTML=`<b>${s.nombre}</b><span>${fmt(v.area_m2)} m² · ${v.asientos} asientos</span>`;
+    const o=new CSS2DObject(el); o.position.copy(P2W((x0+x1)/2,(y0+y1)/2,1.5)); labels.add(o); } }
+
+// ---------- indicadores
+function delta(a,b,inv=false,unit='',d=0){ if(a==null||b==null) return ''; const df=a-b; if(Math.abs(df)<1e-9) return '<small class="eq">=</small>';
+  const good=inv?df<0:df>0; return `<small class="${good?'up':'down'}">${df>0?'▲':'▼'} ${fmt(Math.abs(df),d)}${unit}</small>`; }
+function renderKPI(){
+  const K=OPT[option].kpi, O=OPT[option==='good'?'best':'good'].kpi;
+  const sp=Object.keys(SP);
+  const wavg=(Kx)=>{ let a=0,w=0; for(const k of sp){ const v=Kx.por_espacio[k]; if(v.paso_090_pct!=null){ a+=v.paso_090_pct*v.libre_m2; w+=v.libre_m2; } } return w?a/w:null; };
+  const pk=wavg(K), po=wavg(O);
+  $('kpi').innerHTML=`
+  <div class="eyebrow">Indicadores · comparado contra ${option==='good'?'Best':'Good'}</div>
+  <div class="opt">Opción ${option==='good'?'Good':'Best'}</div>
+  <div class="sub">Mobiliario de sala de consejo, salón biblioteca + bar, cigar room y sala de juntas.</div>
+  <div class="row"><span class="l">Asientos</span><span class="v">${K.asientos}${delta(K.asientos,O.asientos)}</span></div>
+  <div class="row"><span class="l">Huella de mobiliario</span><span class="v">${fmt(K.huella_m2,1)} m²${delta(K.huella_m2,O.huella_m2,true,' m²',1)}</span></div>
+  <div class="row"><span class="l">Piso con paso ≥ 0.90 m</span><span class="v">${fmt(pk,0)} %${delta(pk,po,false,' pts',0)}</span></div>
+  <div class="row"><span class="l">Rutas con paso ≥ 0.90 m</span><span class="v">${fmt(K.rutas_090_pct)} %${delta(K.rutas_090_pct,O.rutas_090_pct,false,' pts')}</span></div>
+  <div class="row"><span class="l">Caminata mediana del vestíbulo a un asiento</span><span class="v">${fmt(K.caminata_mediana_m,1)} m${delta(K.caminata_mediana_m,O.caminata_mediana_m,true,' m',1)}</span></div>
+  <div class="row"><span class="l">Asientos a ≤ 7.5 m de la fachada</span><span class="v">${fmt(K.luz_75_pct)} %</span></div>
+  <h4>Por espacio</h4>
+  <table class="sp"><tr><th>Espacio</th><th>Asientos</th><th>Ocupación</th><th>Paso ≥0.9</th></tr>
+  ${sp.map(k=>{ const v=K.por_espacio[k], w=O.por_espacio[k]; return `<tr><td>${SP[k].nombre}</td><td>${v.asientos}${v.asientos!==w.asientos?` <span class="${v.asientos>w.asientos?'up':'down'}">(${v.asientos>w.asientos?'+':''}${v.asientos-w.asientos})</span>`:''}</td><td>${fmt(v.ocupacion_pct,0)} %</td><td>${v.paso_090_pct!=null?fmt(v.paso_090_pct,0)+' %':'–'}</td></tr>`; }).join('')}
+  </table>
+  <h4>Inventario</h4>
+  <table class="sp">${Object.entries(K.inventario).map(([n,c])=>`<tr><td>${n}</td><td>${c}</td></tr>`).join('')}</table>
+  <details><summary>Cómo se calculó</summary><ul>${data.supuestos.map(s=>`<li>${s}</li>`).join('')}${(data.avisos||[]).map(s=>`<li>${s}</li>`).join('')}</ul></details>
+  <div class="note">Paso libre de 0.90 m: referencia de ruta accesible (<a href="https://www.access-board.gov/ada/#ada-403" target="_blank" rel="noopener">ADA 403.5.1</a>). Luz natural: <a href="https://standard.wellcertified.com/light/right-light" target="_blank" rel="noopener">WELL "Right to light"</a> (7.5 m).</div>`;
+  if(layer==='zonas') buildLabels();
+}
+
+// ---------- navegación
+let walk=false, yaw=0, pitch=0; const keys={};
+function look(eye,at){ camera.position.copy(P2W(eye[0],eye[1],1.6)); const d=P2W(at[0],at[1],1.45).sub(camera.position); yaw=Math.atan2(-d.x,-d.z); pitch=Math.atan2(d.y,Math.hypot(d.x,d.z)); }
+function setView(v){
+  walk=v==='walk'; orbit.enabled=!walk; setClip(!walk);
+  document.querySelectorAll('[data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+  if(walk){ look(VIEWS.vestibulo.eye,VIEWS.vestibulo.at); }
+  else { orbit.target.copy(P2W(22,31,0)); camera.position.copy(P2W(9,8,26)); orbit.update(); }
+}
+let fly=null;
+function goSpace(k){
+  const v=VIEWS[k]; if(!v) return;
+  if(walk){ look(v.eye,v.at); return; }
+  const s=SP[k]; const c= s ? P2W((s.rect[0]+s.rect[1])/2,(s.rect[2]+s.rect[3])/2,0) : P2W(v.at[0],v.at[1],0);
+  const span = s ? Math.max(s.rect[1]-s.rect[0], s.rect[3]-s.rect[2]) : 12;
+  const to=c.clone().add(new THREE.Vector3(-0.35,1.0,0.75).normalize().multiplyScalar(span*1.9+6));
+  fly={t0:performance.now(), p0:camera.position.clone(), q0:orbit.target.clone(), p1:to, q1:c};
+}
+const spWrap=$('spaces');
+for(const [k,v] of Object.entries(VIEWS)){ const b=document.createElement('button'); b.className='chip'; b.textContent=v.n; b.onclick=()=>goSpace(k); spWrap.appendChild(b); }
+let drag=false,lx=0,ly=0;
+canvas.addEventListener('pointerdown',e=>{drag=true;lx=e.clientX;ly=e.clientY;canvas.focus();});
+addEventListener('pointerup',()=>drag=false);
+canvas.addEventListener('pointermove',e=>{ if(!drag||!walk||splitDrag) return; yaw-=(e.clientX-lx)*0.004; pitch-=(e.clientY-ly)*0.004; pitch=THREE.MathUtils.clamp(pitch,-1.2,1.2); lx=e.clientX; ly=e.clientY; });
+addEventListener('keydown',e=>{ keys[e.code]=true; if(e.code==='KeyG') showOption('good'); if(e.code==='KeyB') showOption('best'); });
+addEventListener('keyup',e=>keys[e.code]=false);
+
+// ---------- comparar (cortina)
+let compare=false, splitX=0.5, splitDrag=false;
+const split=$('split');
+function setCompare(on){ compare=on; $('cmp').classList.toggle('on',on); split.style.display=on?'block':'none'; $('tagL').style.display=$('tagR').style.display=on?'block':'none'; placeSplit(); }
+function placeSplit(){ const x=innerWidth*splitX; split.style.left=(x-1)+'px'; $('tagL').style.left=(x-70)+'px'; $('tagR').style.left=(x+12)+'px'; }
+split.addEventListener('pointerdown',e=>{ splitDrag=true; split.setPointerCapture(e.pointerId); });
+split.addEventListener('pointermove',e=>{ if(!splitDrag) return; splitX=THREE.MathUtils.clamp(e.clientX/innerWidth,0.08,0.92); placeSplit(); });
+split.addEventListener('pointerup',()=>splitDrag=false);
+function visOpt(o){ // muestra solo la opción o (sin animación) para el render de comparación
+  for(const s of swaps){ if(s.g) s.g.visible=o==='good'; if(s.b) s.b.visible=o==='best'; if(s.g) s.g.scale.set(1,1,1); if(s.b) s.b.scale.set(1,1,1); if(s.g) s.g.position.y=0; if(s.b) s.b.position.y=0; }
+}
+
+// ---------- UI
+$('oGood').onclick=()=>showOption('good'); $('oBest').onclick=()=>showOption('best');
+$('cmp').onclick=()=>setCompare(!compare);
+$('kpiBtn').onclick=()=>$('kpi').classList.toggle('show');
+document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>setView(b.dataset.v));
+document.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{ layer=b.dataset.l; if(layer==='zonas') buildLabels(); updateLayer(); });
+document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>applyStyle(b.dataset.s));
+
+function resize(){ renderer.setSize(innerWidth,innerHeight,false); labelR.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); placeSplit(); }
+addEventListener('resize',resize); resize();
+
+applyStyle('maq'); showOption('good',true); setView('air'); updateLayer(); renderKPI();
+const params=new URLSearchParams(location.search); if(params.get('op')==='best') showOption('best',true); if(params.get('cmp')) setCompare(true);
+$('load').classList.add('hide');
+
+const clock=new THREE.Clock(), fwd=new THREE.Vector3(), right=new THREE.Vector3();
+renderer.setAnimationLoop(now=>{
+  const dt=Math.min(clock.getDelta(),0.05);
+  stepAnim(performance.now());
+  if(fly){ const t=Math.min((performance.now()-fly.t0)/900,1), e=ease.out(t); camera.position.lerpVectors(fly.p0,fly.p1,e); orbit.target.lerpVectors(fly.q0,fly.q1,e); if(t>=1) fly=null; }
+  if(walk){ camera.rotation.set(pitch,yaw,0,'YXZ'); const sp=(keys.ShiftLeft||keys.ShiftRight?3:1.4)*dt;
+    fwd.set(-Math.sin(yaw),0,-Math.cos(yaw)); right.set(Math.cos(yaw),0,-Math.sin(yaw));
+    if(keys.KeyW||keys.ArrowUp) camera.position.addScaledVector(fwd,sp); if(keys.KeyS||keys.ArrowDown) camera.position.addScaledVector(fwd,-sp);
+    if(keys.KeyD||keys.ArrowRight) camera.position.addScaledVector(right,sp); if(keys.KeyA||keys.ArrowLeft) camera.position.addScaledVector(right,-sp);
+    camera.position.y=1.6; } else orbit.update();
+  if(compare){
+    const W=innerWidth, H=innerHeight, x=Math.round(W*splitX);
+    renderer.setScissorTest(true);
+    visOpt('good'); renderer.setScissor(0,0,x,H); renderer.setViewport(0,0,W,H); renderer.render(scene,camera);
+    visOpt('best'); renderer.setScissor(x,0,W-x,H); renderer.render(scene,camera);
+    renderer.setScissorTest(false); visOpt(option);
+  } else renderer.render(scene,camera);
+  labelR.render(scene,camera);
+});
+window.__elj={THREE,scene,camera,renderer,showOption,setCompare,goSpace,setView,data};
+</script>
+</body>
+</html>
