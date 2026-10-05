@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>El Jalisciense · Piso 29 — Opciones de mobiliario</title>
+<meta name="description" content="Maqueta interactiva: comparación de las opciones GOOD y BEST de mobiliario con estudios de ocupación, holgura, tráfico y luz natural.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="brand/plagovr.png">
+<style>
+  :root{--ink:#191919;--ink2:#595959;--mute:#8e8e8e;--line:#e3e3e3;--line2:#e9e9e9;--band:#f6f6f6;--paper:#fff;--acc:#266de8;--up:#2e7d32;--down:#b3261e}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#e9eef2;color:var(--ink);font:14px/1.45 "Helvetica Neue",Helvetica,Arial,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased}
+  button{font-family:inherit}
+  #c{position:fixed;inset:0;width:100%;height:100%;display:block;outline:none;touch-action:none;cursor:grab}
+  #c:active{cursor:grabbing}
+  header{position:fixed;left:0;right:0;top:0;height:64px;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:20px;padding:0 24px;z-index:10}
+  .ttl{display:flex;flex-direction:column;line-height:1.15}
+  .eyebrow{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);font-weight:600}
+  .ttl b{font-size:20px;font-weight:600;letter-spacing:-.01em}
+  .spacer{flex:1}
+  .seg{display:inline-flex;border:1px solid var(--ink);border-radius:3px;overflow:hidden}
+  .seg button{background:var(--paper);color:var(--ink);border:0;border-right:1px solid var(--ink);padding:10px 20px;font:600 13px/1 inherit;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;min-width:86px}
+  .seg button:last-child{border-right:0}
+  .seg button.on{background:var(--ink);color:#fff}
+  .btn{background:var(--paper);border:1px solid var(--ink);border-radius:3px;padding:9px 14px;font:500 13px/1 inherit;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+  .btn.on{background:var(--ink);color:#fff}
+  .btn:focus-visible,.seg button:focus-visible,.chip:focus-visible,.tb:focus-visible,.pin:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+  aside.left{position:fixed;left:16px;top:80px;width:232px;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:16px;z-index:9;max-height:calc(100vh - 300px);overflow:auto}
+  aside.left h4,#kpi h4{margin:14px 0 8px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);font-weight:600}
+  aside.left h4:first-child{margin-top:0}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{background:var(--paper);border:1px solid #b8b8b8;border-radius:3px;padding:7px 10px;font:13px/1.1 inherit;color:var(--ink);cursor:pointer}
+  .chip.on{border-color:var(--ink);background:var(--ink);color:#fff}
+  .legend{margin-top:10px;font-size:12px;color:var(--ink2);display:none}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  .legend div{margin:2px 0}
+  #kpi{position:fixed;right:16px;top:80px;width:330px;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:18px 18px 12px;z-index:9;max-height:calc(100vh - 170px);overflow:auto}
+  #kpi .opt{font-size:22px;font-weight:600;letter-spacing:-.01em;margin:2px 0 2px}
+  #kpi .sub{color:var(--ink2);font-size:12.5px;margin-bottom:6px}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-top:1px solid var(--line2)}
+  .row .l{font-size:13px;color:var(--ink2)}
+  .row .v{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .row .v small{font-size:12px;font-weight:600;margin-left:6px}
+  .up{color:var(--up)} .down{color:var(--down)} .eq{color:var(--mute)}
+  table.sp{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px}
+  table.sp th{text-align:right;padding:6px 0 6px 10px;font-weight:600;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line)}
+  table.sp th:first-child,table.sp td:first-child{text-align:left;padding-left:0}
+  table.sp td{text-align:right;padding:7px 0 7px 10px;border-bottom:1px solid var(--line2);font-variant-numeric:tabular-nums}
+  table.sp td.cur,table.sp th.cur{color:var(--ink);font-weight:600}
+  .note{font-size:11.5px;color:var(--mute);margin-top:10px}
+  .note a{color:var(--acc);text-decoration:none}
+  details{margin-top:8px} summary{cursor:pointer;font-size:12px;color:var(--ink2)}
+  details ul{padding-left:16px;margin:6px 0;font-size:11.5px;color:var(--mute)}
+  /* tarjeta del punto de interés */
+  #card{position:fixed;left:16px;bottom:88px;width:340px;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:16px 18px 12px;z-index:9;transition:opacity .25s,transform .25s}
+  #card.fade{opacity:0;transform:translateY(6px)}
+  #card h3{margin:4px 0 4px;font-size:20px;font-weight:600;letter-spacing:-.01em}
+  #card p{margin:0 0 8px;color:var(--ink2);font-size:13px}
+  #card .take{margin-top:8px;font-size:12.5px;color:var(--ink);border-left:2px solid var(--acc);padding-left:8px}
+  /* barra de recorrido */
+  #tour{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:6px;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+  .tb{background:var(--paper);border:1px solid transparent;border-radius:3px;height:40px;min-width:40px;padding:0 12px;font:500 13px/1 inherit;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+  .tb:hover{border-color:var(--line)}
+  .tb.on{background:var(--ink);color:#fff}
+  .tb svg{width:16px;height:16px}
+  #dots{display:flex;gap:4px;padding:0 6px;border-left:1px solid var(--line2);border-right:1px solid var(--line2)}
+  #dots button{width:34px;height:34px;border-radius:50%;border:1px solid #b8b8b8;background:#fff;font:600 12px/1 inherit;color:var(--ink);cursor:pointer}
+  #dots button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  #stopName{font-size:13px;font-weight:600;min-width:150px;text-align:center;padding:0 6px;white-space:nowrap}
+  /* pines 3D */
+  .pin{pointer-events:auto;display:flex;align-items:center;gap:6px;background:none;border:0;padding:0;cursor:pointer;transform:translateY(-14px)}
+  .pin i{font-style:normal;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:600 12px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;box-shadow:0 0 0 3px rgba(255,255,255,.9)}
+  .pin span{background:#fff;color:var(--ink);font:600 12px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;padding:6px 8px;border-radius:3px;border:1px solid var(--ink);white-space:nowrap}
+  .pin.cur i{background:var(--acc)}
+  .pin.hidelab span{display:none}
+  .pin:hover span{display:inline-block}
+  .lab{font:12px/1.2 "Helvetica Neue",Helvetica,Arial,sans-serif;background:#fff;border:1px solid var(--ink);padding:5px 8px;border-radius:3px;white-space:nowrap;color:var(--ink);transform:translateY(-8px)}
+  .lab b{display:block;font-weight:600;font-size:12px}
+  .lab span{color:var(--ink2);font-size:11px}
+  #split{position:fixed;top:64px;bottom:0;width:2px;background:var(--ink);z-index:8;display:none;cursor:ew-resize;touch-action:none}
+  #split span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--ink);color:#fff;font:600 11px/1 inherit;letter-spacing:.05em;padding:9px 10px;border-radius:3px;white-space:nowrap}
+  .tag{position:fixed;top:78px;z-index:8;background:var(--ink);color:#fff;font:600 11px/1 inherit;letter-spacing:.06em;padding:6px 8px;border-radius:3px;display:none;text-transform:uppercase}
+  #wm{position:fixed;right:18px;bottom:16px;z-index:11;width:128px;opacity:.9;pointer-events:none;user-select:none}
+  /* ayuda */
+  #hint{position:fixed;inset:0;z-index:15;display:grid;place-items:center;background:rgba(25,25,25,.28);transition:opacity .3s}
+  #hint.hide{opacity:0;pointer-events:none}
+  #hint .in{background:#fff;border-radius:3px;padding:24px 26px 20px;width:min(560px,92vw)}
+  #hint h3{margin:4px 0 14px;font-size:20px;font-weight:600}
+  #hint .g{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
+  #hint .g div{font-size:12.5px;color:var(--ink2)}
+  #hint .g b{display:block;color:var(--ink);font-size:13px;margin:8px 0 2px}
+  #hint svg{width:40px;height:40px;stroke:var(--ink);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  #load{position:fixed;inset:0;background:var(--paper);display:grid;place-items:center;z-index:20;transition:opacity .5s}
+  #load.hide{opacity:0;pointer-events:none}
+  #load .in{width:min(420px,80vw)}
+  #load .bar{height:2px;background:var(--line);margin-top:14px}
+  #load .bar i{display:block;height:100%;width:0;background:var(--ink);transition:width .2s}
+  .mtoggle{display:none}
+  @media (max-width:900px){
+    header{gap:8px;padding:0 10px;height:58px}.ttl b{font-size:15px}.ttl .eyebrow{display:none}#cmp{display:none}
+    .seg button{min-width:58px;padding:9px 10px}
+    aside.left{top:66px;left:8px;right:8px;width:auto;max-height:44vh;display:none}aside.left.show{display:block}
+    #kpi{top:66px;left:8px;right:8px;width:auto;max-height:56vh;display:none}#kpi.show{display:block}
+    .mtoggle{display:inline-flex;padding:9px 10px}
+    #card{left:8px;right:8px;width:auto;bottom:70px;padding:12px 14px 8px}#card h3{font-size:17px}#card p{display:none}
+    #tour{left:8px;right:8px;transform:none;bottom:8px;justify-content:space-between}
+    #stopName,#play .t,#home .t{display:none}#dots button{width:30px;height:30px}
+    #wm{width:84px;top:66px;bottom:auto;right:10px;opacity:.8}
+    #hint .g{grid-template-columns:1fr}
+  }
+  @media (max-width:480px){ .ttl{display:none} header{justify-content:space-between} .spacer{display:none} .btn.mtoggle,#helpBtn{padding:9px 9px} }
+</style>
+</head>
+<body>
+<canvas id="c" tabindex="0" aria-label="Maqueta 3D interactiva del piso 29"></canvas>
+<header>
+  <div class="ttl"><span class="eyebrow">Maqueta interactiva · Piso 29</span><b>El Jalisciense</b></div>
+  <div class="spacer"></div>
+  <div class="seg" role="group" aria-label="Opción de mobiliario"><button id="oGood" class="on">Good</button><button id="oBest">Best</button></div>
+  <button class="btn" id="cmp" title="Comparar las dos opciones con una cortina">Comparar</button>
+  <button class="btn mtoggle" id="layBtn">Estudios</button>
+  <button class="btn mtoggle" id="kpiBtn">Datos</button>
+  <button class="btn" id="helpBtn" title="Cómo moverse" aria-label="Ayuda">?</button>
+</header>
+<aside class="left" id="aside" aria-label="Estudios">
+  <h4>Estudios</h4>
+  <div class="chips"><button class="chip on" data-l="none">Ninguno</button><button class="chip" data-l="zonas">Zonas</button><button class="chip" data-l="holgura">Holgura</button><button class="chip" data-l="trafico">Tráfico</button><button class="chip" data-l="luz">Luz natural</button></div>
+  <div class="legend" id="legend"></div>
+  <h4>Estilo</h4>
+  <div class="chips"><button class="chip on" data-s="maq">Maqueta</button><button class="chip" data-s="real">Materiales</button></div>
+</aside>
+<section id="kpi" aria-live="polite"></section>
+<section id="card" aria-live="polite"></section>
+<nav id="tour" aria-label="Recorrido por puntos de interés">
+  <button class="tb" id="home" title="Vista general (H)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="t">General</span></button>
+  <button class="tb" id="prev" title="Anterior (←)" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <div id="dots"></div>
+  <span id="stopName"></span>
+  <button class="tb" id="next" title="Siguiente (→)" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg></button>
+  <button class="tb" id="play" title="Recorrido automático"><svg viewBox="0 0 24 24" fill="currentColor"><path id="playIco" d="M7 4l13 8-13 8z"/></svg><span class="t">Recorrido</span></button>
+</nav>
+<div id="split"><span>GOOD ⟷ BEST</span></div>
+<div class="tag" id="tagL">Good</div><div class="tag" id="tagR">Best</div>
+<img id="wm" src="brand/plagovr.png" alt="PLAGO VR">
+<div id="hint" class="hide" role="dialog" aria-label="Cómo moverse"><div class="in">
+  <div class="eyebrow">Cómo moverse</div><h3>Tres gestos, nada más</h3>
+  <div class="g">
+    <div><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="11"/><path d="M8 13a14 14 0 0 1 6-5M32 27a14 14 0 0 1-6 5"/><path d="M14 8l0 4 4 0M26 32l0-4-4 0"/></svg><b>Girar</b>Arrastra con el mouse o un dedo.</div>
+    <div><svg viewBox="0 0 40 40"><rect x="13" y="6" width="14" height="22" rx="7"/><path d="M20 11v5M20 32v4M16 34l4 3 4-3"/></svg><b>Acercar</b>Rueda del mouse o pellizca. El acercamiento está limitado.</div>
+    <div><svg viewBox="0 0 40 40"><circle cx="11" cy="20" r="6"/><path d="M11 17.5v5"/><path d="M22 20h12M29 15l5 5-5 5"/></svg><b>Recorrer</b>Toca un número o usa ‹ ›. Casita = vista general.</div>
+  </div>
+  <button class="btn on" id="hintOk">Entendido</button>
+</div></div>
+<div id="load"><div class="in"><div class="eyebrow">PLAGO VR</div><div style="font-size:20px;font-weight:600;margin-top:4px">El Jalisciense · Piso 29</div><div id="ltxt" style="color:var(--ink2);margin-top:6px">Cargando maqueta…</div><div class="bar"><i id="lbar"></i></div></div></div>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {CSS2DRenderer, CSS2DObject} from 'three/addons/renderers/CSS2DRenderer.js';
+import {Water} from 'three/addons/objects/Water2.js';
+
+const $=id=>document.getElementById(id);
+const fmt=(n,d=0)=>Number(n).toLocaleString('es-MX',{minimumFractionDigits:d,maximumFractionDigits:d});
+const P2W=(x,y,h=0)=>new THREE.Vector3(x,h,-y);          // plano (x,y) → three (x, h, -y)
+const params=new URLSearchParams(location.search);
+const MOBILE=matchMedia('(max-width:900px)').matches;
+const LITE=params.has('lite')||MOBILE;
+
+// ---------- render
+const canvas=$('c');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(LITE?Math.min(devicePixelRatio,1.25):Math.min(devicePixelRatio,1.75));
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.NeutralToneMapping; renderer.toneMappingExposure=1.0;
+renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.localClippingEnabled=true;
+const scene=new THREE.Scene();
+const HORIZON=new THREE.Color(0xe7edf1);
+scene.fog=new THREE.Fog(HORIZON,70,560);
+
+// cielo: esfera con degradado (horizonte claro → cenit azul suave)
+const skyMat=new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,fog:false,
+  uniforms:{top:{value:new THREE.Color(0x8fb3d6)},mid:{value:HORIZON},bot:{value:new THREE.Color(0xd5dbe0)}},
+  vertexShader:'varying vec3 vP; void main(){ vP=normalize(position); gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }',
+  fragmentShader:'uniform vec3 top,mid,bot; varying vec3 vP; void main(){ float h=vP.y; vec3 c = h>0. ? mix(mid,top,pow(smoothstep(0.,1.,h),0.7)) : mix(mid,bot,smoothstep(0.,-0.25,h)); gl_FragColor=vec4(c,1.); }'});
+const sky=new THREE.Mesh(new THREE.SphereGeometry(1000,32,16),skyMat); sky.position.set(20,0,-20); scene.add(sky);
+// entorno para reflejos (vidrio) a partir del mismo cielo
+{ const envScene=new THREE.Scene(); envScene.add(new THREE.Mesh(new THREE.SphereGeometry(10,32,16),skyMat.clone()));
+  const pm=new THREE.PMREMGenerator(renderer); scene.environment=pm.fromScene(envScene,0.02).texture; scene.environmentIntensity=0.55; }
+
+// luz: cielo + sol con sombra suave + relleno
+scene.add(new THREE.HemisphereLight(0xe3edf7,0xc9bca8,1.25));
+const sun=new THREE.DirectionalLight(0xfff1df,2.1); sun.position.set(-10,34,-4); sun.target.position.set(21,0,-24);
+sun.castShadow=true; sun.shadow.mapSize.set(LITE?1024:2048,LITE?1024:2048);
+Object.assign(sun.shadow.camera,{left:-30,right:30,top:30,bottom:-30,near:1,far:120}); sun.shadow.bias=-0.0004; sun.shadow.normalBias=0.03; sun.shadow.radius=3;
+scene.add(sun,sun.target);
+const fill=new THREE.DirectionalLight(0xdfe8f5,0.45); fill.position.set(60,20,10); scene.add(fill);
+
+// ciudad de contexto (bloques low-poly, el piso 29 está a ~116 m de altura)
+const LEVEL=-116;
+{ const rnd=(s=>()=>(s=(s*16807)%2147483647)/2147483647)(29);
+  const N=LITE?260:420, geo=new THREE.BoxGeometry(1,1,1); geo.translate(0,0.5,0);
+  const mat=new THREE.MeshLambertMaterial({color:0xd9dfe3});
+  const city=new THREE.InstancedMesh(geo,mat,N); const m=new THREE.Matrix4(), c=new THREE.Color();
+  for(let i=0;i<N;i++){ const a=rnd()*Math.PI*2, r=110+Math.pow(rnd(),0.8)*480; const w=12+rnd()*28, d=12+rnd()*28;
+    const h= r>300 && rnd()<0.18 ? 110+rnd()*60 : 14+rnd()*(r<160?55:85);   // casi todo por debajo del piso 29
+    m.compose(new THREE.Vector3(20+Math.cos(a)*r,LEVEL,-20+Math.sin(a)*r),new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),rnd()*0.4),new THREE.Vector3(w,h,d));
+    city.setMatrixAt(i,m); c.setHSL(0.58,0.05,0.80+rnd()*0.10); city.setColorAt(i,c); }
+  scene.add(city);
+  const ground=new THREE.Mesh(new THREE.CircleGeometry(1100,48),new THREE.MeshLambertMaterial({color:0xc9cfc8})); ground.rotation.x=-Math.PI/2; ground.position.set(20,LEVEL,-20); scene.add(ground);
+}
+// torre bajo el piso 29 (maqueta: bandas de entrepiso)
+{ const cv=document.createElement('canvas'); cv.width=8; cv.height=64; const x=cv.getContext('2d');
+  x.fillStyle='#b9c6cf'; x.fillRect(0,0,8,64); x.fillStyle='#e6e3dd'; x.fillRect(0,0,8,10);
+  const t=new THREE.CanvasTexture(cv); t.wrapS=t.wrapT=THREE.RepeatWrapping; t.repeat.set(1,29); t.colorSpace=THREE.SRGBColorSpace;
+  const tower=new THREE.Mesh(new THREE.BoxGeometry(40.3,-LEVEL-0.32,38.8),[0,1,2,3,4,5].map(i=> i===2||i===3 ? new THREE.MeshStandardMaterial({color:0xe6e3dd,roughness:1}) : new THREE.MeshStandardMaterial({map:t,roughness:0.6,metalness:0.1})));
+  tower.position.set(20.45,(LEVEL-0.32)/2,-19.65); scene.add(tower); }
+
+const camera=new THREE.PerspectiveCamera(45,1,0.1,2500);
+const orbit=new OrbitControls(camera,canvas);
+Object.assign(orbit,{enableDamping:true,dampingFactor:0.08,enablePan:false,rotateSpeed:0.55,zoomSpeed:0.6,zoomToCursor:false});
+orbit.touches={ONE:THREE.TOUCH.ROTATE,TWO:THREE.TOUCH.DOLLY_ROTATE};
+orbit.mouseButtons={LEFT:THREE.MOUSE.ROTATE,MIDDLE:THREE.MOUSE.DOLLY,RIGHT:THREE.MOUSE.ROTATE};
+// corte de maqueta por shader: 2.40 m en la franja norte (espacios con mobiliario), 1.10 m en el resto del piso
+const CUTU={hi:{value:2.4},lo:{value:1.1},z:{value:-27.2}};
+function addCut(m){ m.onBeforeCompile=sh=>{ Object.assign(sh.uniforms,{cutHi:CUTU.hi,cutLo:CUTU.lo,cutZ:CUTU.z});
+  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nvarying vec3 vWP;').replace('#include <begin_vertex>','#include <begin_vertex>\nvWP=(modelMatrix*vec4(transformed,1.0)).xyz;');
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>\nvarying vec3 vWP; uniform float cutHi,cutLo,cutZ;').replace('#include <clipping_planes_fragment>','#include <clipping_planes_fragment>\nif(vWP.y>cutHi||(vWP.y>cutLo&&vWP.z>cutZ)) discard;'); };
+  m.customProgramCacheKey=()=>'cut'; m.needsUpdate=true; return m; }
+const DEPTH=addCut(new THREE.MeshDepthMaterial({depthPacking:THREE.RGBADepthPacking,side:THREE.DoubleSide}));
+const labelR=new CSS2DRenderer(); Object.assign(labelR.domElement.style,{position:'fixed',left:'0',top:'0',pointerEvents:'none',zIndex:'7'}); document.body.appendChild(labelR.domElement);
+
+// ---------- datos
+const data=await fetch('data/analisis.json').then(r=>r.json());
+const SP=data.espacios, OPT=data.opciones;
+
+// ---------- modelos
+const draco=new DRACOLoader(); draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/libs/draco/gltf/');
+const loader=new GLTFLoader(); loader.setDRACOLoader(draco);
+const files=['models/ELJ_ARQ.glb','models/ELJ_GOOD.glb','models/ELJ_BEST.glb','models/ELJ_DECOR.glb'];
+const prog=[0,0,0,0]; const upd=()=>{ $('lbar').style.width=(100*prog.reduce((a,b)=>a+b,0)/4).toFixed(0)+'%'; };
+const [gA,gG,gB,gD]=await Promise.all(files.map((f,i)=>loader.loadAsync(f,e=>{ if(e.total){prog[i]=e.loaded/e.total;upd();} })));
+$('ltxt').textContent='Preparando escena…';
+const ARQ=gA.scene, GOOD=gG.scene, BEST=gB.scene, DECOR=gD.scene; scene.add(ARQ,GOOD,BEST,DECOR);
+
+// materiales. Maqueta = color promedio de cada material (textura incluida), apagado y sin textura:
+// conserva el ambiente de los renders (madera cereza, muros greige, piedra) sin el detalle fino.
+const SRGB=THREE.SRGBColorSpace;
+const GLASS=new THREE.MeshPhysicalMaterial({color:0xd8e9f2,transparent:true,opacity:0.1,roughness:0.03,metalness:0,envMapIntensity:1.4,depthWrite:false,side:THREE.DoubleSide});
+const mats=[], matCache=new Map();
+function isGlass(m){ return !/sky reflection/i.test(m.name||'') && ((m.transparent && m.opacity<0.9) || /glass|vidrio|cristal|verre/i.test(m.name||'')); }
+function avgTex(m){ const img=m.map&&m.map.image; if(!img) return null;
+  try{ const c=document.createElement('canvas'); c.width=c.height=1; const x=c.getContext('2d'); x.drawImage(img,0,0,1,1); const d=x.getImageData(0,0,1,1).data;
+    return new THREE.Color().setRGB(d[0]/255,d[1]/255,d[2]/255,SRGB).multiply(m.color); }catch(e){ return null; } }
+function maqColor(m){ const c=avgTex(m)||m.color.clone(); const h={}; c.getHSL(h,SRGB);
+  if(h.s<0.12) c.setHSL(0.085,0.11,THREE.MathUtils.clamp(h.l*0.9,0.46,0.78),SRGB);          // neutros → greige (muros, plafón, piedra clara)
+  else c.setHSL(h.h,h.s*0.72,THREE.MathUtils.clamp(h.l,0.2,0.7),SRGB);                         // maderas, tapetes, piel: mismo tono, menos saturado
+  return c; }
+const FLAT=/carpet|rug|tapete/i;
+let waterSrc=null;
+function prep(root,{shadow=true}={}){ root.traverse(o=>{ if(!o.isMesh) return; o.receiveShadow=true; o.castShadow=shadow;
+  const m=o.material;
+  if(/sky reflection/i.test(m.name||'')){ waterSrc=o; return; }
+  if(/wood floor/i.test(m.name||'')){ mats.push({mesh:o,real:m,maq:HIDE}); return; }                // el piso de maqueta lo da el plano propio
+  const glass=isGlass(m); if(glass){ o.castShadow=false; o.renderOrder=3; }
+  let pair=matCache.get(m);
+  if(!pair){ const maq=glass ? GLASS : new THREE.MeshStandardMaterial({color:maqColor(m),roughness:0.9,metalness:0,side:THREE.DoubleSide});
+    const real=glass ? GLASS : m; if(!glass) real.side=THREE.DoubleSide;
+    if(FLAT.test(m.name||'')) for(const x of [maq,real]) Object.assign(x,{polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2});
+    pair={real,maq}; matCache.set(m,pair); }
+  mats.push({mesh:o, ...pair}); }); }
+const HIDE=new THREE.MeshBasicMaterial({visible:false});
+prep(ARQ); prep(DECOR,{shadow:false});
+// piso de maqueta: cereza apagado (renders: duela de cereza oscura)
+// piso: greige claro en el resto del piso; duela cereza (apagada) en la franja de espacios estudiados
+const floor=new THREE.Group(); scene.add(floor);
+for(const [x0,x1,y0,y1,col] of [[0.35,40.55,0.35,27.2,new THREE.Color().setHSL(0.085,0.10,0.80,SRGB)],[0.35,40.55,27.2,38.95,new THREE.Color().setHSL(0.045,0.30,0.30,SRGB)]]){
+  const f=new THREE.Mesh(new THREE.PlaneGeometry(x1-x0,y1-y0),new THREE.MeshStandardMaterial({color:col,roughness:0.7}));
+  f.rotation.x=-Math.PI/2; f.position.set((x0+x1)/2,-0.004,-(y0+y1)/2); f.receiveShadow=true; floor.add(f); }
+[GOOD,BEST].forEach(g=>g.traverse(o=>{ if(o.isMesh){ o.castShadow=true; o.receiveShadow=true;
+  (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{ m.side=THREE.DoubleSide; }); }}));
+
+// espejo de agua: tina negra + agua con reflejo (Water2: reflexión + refracción, normales procedurales)
+function waveNormal(seed){ const N=256, cv=document.createElement('canvas'); cv.width=cv.height=N; const x=cv.getContext('2d'), im=x.createImageData(N,N);
+  const W=[]; let r=seed; const rnd=()=>(r=(r*16807)%2147483647)/2147483647;
+  for(let i=0;i<9;i++) W.push({fx:Math.round(1+rnd()*6)*(rnd()<.5?-1:1), fy:Math.round(1+rnd()*6), a:0.5/(1+i*0.35), p:rnd()*6.283});
+  for(let j=0;j<N;j++) for(let i=0;i<N;i++){ let dx=0,dy=0; for(const w of W){ const t=6.2832*(w.fx*i+w.fy*j)/N+w.p, c=Math.cos(t)*w.a; dx+=c*w.fx; dy+=c*w.fy; }
+    const nx=-dx*0.08, ny=-dy*0.08, l=Math.hypot(nx,ny,1); const k=(j*N+i)*4; im.data[k]=(nx/l*0.5+0.5)*255; im.data[k+1]=(ny/l*0.5+0.5)*255; im.data[k+2]=(1/l*0.5+0.5)*255; im.data[k+3]=255; }
+  x.putImageData(im,0,0); const t=new THREE.CanvasTexture(cv); t.wrapS=t.wrapT=THREE.RepeatWrapping; return t; }
+let water=null;
+if(waterSrc){ waterSrc.visible=false; const bb=new THREE.Box3().setFromObject(waterSrc), sz=bb.getSize(new THREE.Vector3()), c=bb.getCenter(new THREE.Vector3());
+  const top=bb.max.y, rim=0.07;
+  const basin=new THREE.Mesh(new THREE.BoxGeometry(sz.x+2*rim,top-0.005,sz.z+2*rim),new THREE.MeshStandardMaterial({color:0x101112,roughness:0.35,metalness:0.1}));
+  basin.position.set(c.x,(top-0.005)/2,c.z); basin.castShadow=basin.receiveShadow=true; scene.add(basin);
+  const geo=new THREE.PlaneGeometry(sz.x,sz.z);
+  if(!LITE){ water=new Water(geo,{color:0x343c40,scale:1.6,flowDirection:new THREE.Vector2(0.6,0.35),flowSpeed:0.012,reflectivity:0.5,textureWidth:512,textureHeight:512,normalMap0:waveNormal(7),normalMap1:waveNormal(31)}); }
+  else water=new THREE.Mesh(geo,new THREE.MeshPhysicalMaterial({color:0x07090a,roughness:0.03,metalness:0,clearcoat:1,envMapIntensity:2.2,normalMap:waveNormal(7),normalScale:new THREE.Vector2(0.25,0.25)}));
+  water.rotation.x=-Math.PI/2; water.position.set(c.x,top+0.004,c.z); scene.add(water); }
+function applyStyle(s){
+  for(const e of mats) e.mesh.material = s==='maq'?e.maq:e.real;
+  floor.visible = s==='maq';
+  document.querySelectorAll('[data-s]').forEach(b=>b.classList.toggle('on',b.dataset.s===s));
+}
+function setClip(){ const seen=new Set(); mats.forEach(e=>{ e.mesh.customDepthMaterial=DEPTH; for(const m of [e.real,e.maq]) if(!seen.has(m)){ seen.add(m); addCut(m); } });
+  [GOOD,BEST].forEach(g=>g.traverse(o=>{ if(o.isMesh) (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{ if(!seen.has(m)){ seen.add(m); addCut(m); } }); })); }
+
+// ---------- piezas y animación GOOD ↔ BEST
+const pieceNodes={good:{},best:{}};
+GOOD.children.forEach(n=>{ const m=/^P_(\d+)/.exec(n.name); if(m) pieceNodes.good[+m[1]]=n; });
+BEST.children.forEach(n=>{ const m=/^P_(\d+)/.exec(n.name); if(m) pieceNodes.best[+m[1]]=n; });
+const common=new Set(data.comunes_good||[]);
+const swaps=[];
+const center=P2W(20.4,33);
+for(const p of data.pares){
+  const g=p.g!=null?pieceNodes.good[p.g]:null, b=p.b!=null?pieceNodes.best[p.b]:null;
+  if(p.igual && g && b){ b.visible=false; b.userData.hidden=true; continue; }
+  if(g && common.has(p.g) && !b) continue;
+  const ref=(g||b).position; swaps.push({g,b,d:ref.distanceTo(center)});
+}
+swaps.sort((a,b)=>a.d-b.d);
+let option='good', anim=null;
+function setNode(n,k){ if(!n) return; n.visible=k>0.001; const s=0.85+0.15*Math.min(k,1); n.scale.set(s,Math.max(k,0.0001),s); n.position.y=(1-Math.min(k,1))*-0.05; }
+const ease={out:t=>1-Math.pow(1-t,3), inout:t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2, back:t=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2);}};
+function showOption(o,instant=false){
+  if(o===option && !instant) return; option=o;
+  $('oGood').classList.toggle('on',o==='good'); $('oBest').classList.toggle('on',o==='best');
+  anim={t0:performance.now(), items:swaps.map((s,i)=>({out:o==='good'?s.b:s.g, inn:o==='good'?s.g:s.b, delay:i*22}))};
+  if(instant){ anim.items.forEach(it=>{ setNode(it.out,0); setNode(it.inn,1); }); anim=null; }
+  renderKPI(); renderCard(); updateLayer();
+}
+function stepAnim(now){
+  if(!anim) return; let done=true;
+  for(const it of anim.items){
+    const t=(now-anim.t0-it.delay)/1000;
+    const a=THREE.MathUtils.clamp(t/0.32,0,1), b=THREE.MathUtils.clamp((t-0.22)/0.48,0,1);
+    setNode(it.out,1-ease.out(a)); setNode(it.inn,b<=0?0:ease.back(b));
+    if(b<1) done=false;
+  }
+  if(done){ anim.items.forEach(it=>{ setNode(it.out,0); setNode(it.inn,1); }); anim=null; }
+}
+
+// ---------- capas de estudios
+const g=data.grid, WM=g.W*g.G, HM=g.H*g.G;
+const tl=new THREE.TextureLoader(); const tex={};
+for(const k of ['zonas','holgura_good','holgura_best','trafico_good','trafico_best']){ const t=tl.load('data/'+k+'.png'); t.colorSpace=THREE.SRGBColorSpace; t.magFilter=k.startsWith('trafico')?THREE.LinearFilter:THREE.NearestFilter; tex[k]=t; }
+const lmat=new THREE.MeshBasicMaterial({transparent:true,depthWrite:false,toneMapped:false,fog:false,polygonOffset:true,polygonOffsetFactor:-4});
+const lplane=new THREE.Mesh(new THREE.PlaneGeometry(WM,HM),lmat); lplane.rotation.x=-Math.PI/2; lplane.position.set(g.x0+WM/2,0.03,-(g.ytop-HM/2)); lplane.renderOrder=5; lplane.visible=false; scene.add(lplane);
+const dots=new THREE.Group(); scene.add(dots);
+const labels=new THREE.Group(); scene.add(labels);
+let layer='none';
+const LEG={
+  zonas:'<div><i style="background:#8c5cd9"></i>Salas</div><div><i style="background:#4a8fe3"></i>Salón biblioteca + bar</div><div><i style="background:#f29e33"></i>Cigar room</div>',
+  holgura:'<div><b>Ancho libre entre muebles</b></div><div><i style="background:#d64541"></i>&lt; 0.60 m</div><div><i style="background:#f2a93b"></i>0.60 – 0.90 m</div><div><i style="background:#99c478"></i>0.90 – 1.20 m</div><div><i style="background:#468c6e"></i>&gt; 1.20 m</div>',
+  trafico:'<div><b>Rutas desde el vestíbulo a cada asiento</b></div><div style="height:6px;border-radius:2px;background:linear-gradient(90deg,#000004,#781c6d,#ed6925,#fcffa4);margin:6px 0"></div><div style="display:flex;justify-content:space-between"><span>poco paso</span><span>mucho paso</span></div>',
+  luz:'<div><b>Distancia del asiento a la fachada</b></div><div><i style="background:#f2c230"></i>≤ 7.5 m</div><div><i style="background:#7a8fb8"></i>&gt; 7.5 m</div>'
+};
+function updateLayer(){
+  const show=layer!=='none'; lplane.visible=show && layer!=='luz';
+  if(layer==='zonas') lmat.map=tex.zonas; else if(layer==='holgura') lmat.map=tex['holgura_'+option]; else if(layer==='trafico') lmat.map=tex['trafico_'+option];
+  lmat.opacity= layer==='trafico'?1:0.9; lmat.needsUpdate=true;
+  dots.clear();
+  if(layer==='luz'){ const cg=new THREE.CircleGeometry(0.16,20);
+    const ma=new THREE.MeshBasicMaterial({color:0xf2c230,toneMapped:false,fog:false}), mb=new THREE.MeshBasicMaterial({color:0x7a8fb8,toneMapped:false,fog:false});
+    for(const [x,y] of OPT[option].asientos_xy){ const d=Math.min(x-0.6,40.3-x,y-0.5,38.95-y);
+      const m=new THREE.Mesh(cg,d<=7.5?ma:mb); m.rotation.x=-Math.PI/2; m.position.copy(P2W(x,y,1.25)); m.renderOrder=9; dots.add(m); } }
+  labels.visible = layer==='zonas'; pins.visible = layer!=='zonas';
+  if(layer==='zonas') buildLabels();
+  const L=$('legend'); L.style.display=show?'block':'none'; L.innerHTML=LEG[layer]||'';
+  document.querySelectorAll('[data-l]').forEach(b=>b.classList.toggle('on',b.dataset.l===layer));
+}
+function buildLabels(){ labels.children.slice().forEach(o=>{ o.element.remove(); labels.remove(o); });
+  for(const [k,s] of Object.entries(SP)){ const [x0,x1,y0,y1]=s.rect; const v=OPT[option].kpi.por_espacio[k];
+    const el=document.createElement('div'); el.className='lab'; el.innerHTML=`<b>${s.nombre}</b><span>${fmt(v.area_m2)} m² · ${v.asientos} asientos</span>`;
+    const o=new CSS2DObject(el); o.position.copy(P2W((x0+x1)/2,(y0+y1)/2,1.5)); labels.add(o); } }
+
+// ---------- indicadores generales
+function delta(a,b,inv=false,unit='',d=0){ if(a==null||b==null) return ''; const df=a-b; if(Math.abs(df)<1e-9) return '<small class="eq">=</small>';
+  const good=inv?df<0:df>0; return `<small class="${good?'up':'down'}">${df>0?'▲':'▼'} ${fmt(Math.abs(df),d)}${unit}</small>`; }
+function renderKPI(){
+  const K=OPT[option].kpi, O=OPT[option==='good'?'best':'good'].kpi;
+  const sp=Object.keys(SP);
+  const wavg=(Kx)=>{ let a=0,w=0; for(const k of sp){ const v=Kx.por_espacio[k]; if(v.paso_090_pct!=null){ a+=v.paso_090_pct*v.libre_m2; w+=v.libre_m2; } } return w?a/w:null; };
+  const pk=wavg(K), po=wavg(O);
+  $('kpi').innerHTML=`
+  <div class="eyebrow">Indicadores · comparado contra ${option==='good'?'Best':'Good'}</div>
+  <div class="opt">Opción ${option==='good'?'Good':'Best'}</div>
+  <div class="sub">Mobiliario de sala de consejo, salón biblioteca + bar, cigar room y sala de juntas.</div>
+  <div class="row"><span class="l">Asientos</span><span class="v">${K.asientos}${delta(K.asientos,O.asientos)}</span></div>
+  <div class="row"><span class="l">Huella de mobiliario</span><span class="v">${fmt(K.huella_m2,1)} m²${delta(K.huella_m2,O.huella_m2,true,' m²',1)}</span></div>
+  <div class="row"><span class="l">Piso con paso ≥ 0.90 m</span><span class="v">${fmt(pk,0)} %${delta(pk,po,false,' pts',0)}</span></div>
+  <div class="row"><span class="l">Rutas con paso ≥ 0.90 m</span><span class="v">${fmt(K.rutas_090_pct)} %${delta(K.rutas_090_pct,O.rutas_090_pct,false,' pts')}</span></div>
+  <div class="row"><span class="l">Caminata mediana del vestíbulo a un asiento</span><span class="v">${fmt(K.caminata_mediana_m,1)} m${delta(K.caminata_mediana_m,O.caminata_mediana_m,true,' m',1)}</span></div>
+  <div class="row"><span class="l">Asientos a ≤ 7.5 m de la fachada</span><span class="v">${fmt(K.luz_75_pct)} %</span></div>
+  <h4>Inventario</h4>
+  <table class="sp">${Object.entries(K.inventario).map(([n,c])=>`<tr><td>${n}</td><td>${c}</td></tr>`).join('')}</table>
+  <details><summary>Cómo se calculó</summary><ul>${data.supuestos.map(s=>`<li>${s}</li>`).join('')}${(data.avisos||[]).map(s=>`<li>${s}</li>`).join('')}</ul></details>
+  <div class="note">Paso libre de 0.90 m: referencia de ruta accesible (<a href="https://www.access-board.gov/ada/#ada-403" target="_blank" rel="noopener">ADA 403.5.1</a>). Luz natural: <a href="https://standard.wellcertified.com/light/right-light" target="_blank" rel="noopener">WELL "Right to light"</a> (7.5 m).</div>`;
+}
+
+// ---------- puntos de interés (recorrido guiado)
+// pose = objetivo (planta x,y), distancia r, ángulo polar phi (0 = cenital), azimut theta (0 = cámara al sur mirando al norte)
+const STOPS=[
+  {k:'general', n:'Vista general', at:[21,24], r:52, phi:0.27, th:-0.5, lim:{r:[44,64],phi:[0.06,0.36],th:null},
+   d:'Club privado en el piso 29. Cuatro espacios con mobiliario: toca un número para ir a cada uno.'},
+  {k:'salon', n:'Salón biblioteca + bar', at:[20.5,33.4], r:36, phi:0.25, th:0.05, d:'Salón de doble altura con biblioteca, chimenea, piano y bar. Es el espacio que más gente recibe.'},
+  {k:'sala_consejo', n:'Sala de consejo', at:[9.85,36.2], r:27, phi:0.24, th:0.25, d:'Sala cerrada sobre la fachada norte, con mesa central.'},
+  {k:'cigar', n:'Cigar room', at:[30.05,36.2], r:26, phi:0.24, th:0, d:'Sala lounge para fumar puros, junto al salón.'},
+  {k:'sala_juntas', n:'Sala de juntas', at:[36.5,36.2], r:27, phi:0.24, th:-0.25, d:'Sala de juntas en la esquina noreste, con vista a la ciudad.'},
+];
+const RK=innerWidth/innerHeight<0.8?1.45:1;   // retrato: más distancia para que quepa el espacio
+STOPS.forEach(s=>{ s.phi*=Math.PI; s.target=P2W(s.at[0],s.at[1],0.6); s.r*=RK; if(s.lim) s.lim.r=s.lim.r.map(v=>v*RK);
+  s.lim=s.lim||{r:[s.r*0.92,s.r*1.3],phi:[0.06,0.38],th:[s.th-0.8,s.th+0.8]}; s.lim.phi=s.lim.phi.map(v=>v*Math.PI); });
+let cur=0, fly=null;
+function applyLimits(s){ const L=s.lim;
+  orbit.minDistance=L.r[0]; orbit.maxDistance=L.r[1]; orbit.minPolarAngle=L.phi[0]; orbit.maxPolarAngle=L.phi[1];
+  orbit.minAzimuthAngle=L.th?L.th[0]:-Infinity; orbit.maxAzimuthAngle=L.th?L.th[1]:Infinity; }
+function openLimits(){ Object.assign(orbit,{minDistance:0,maxDistance:Infinity,minPolarAngle:0,maxPolarAngle:Math.PI,minAzimuthAngle:-Infinity,maxAzimuthAngle:Infinity}); }
+const sph=new THREE.Spherical();
+function goStop(i,instant=false){
+  i=(i+STOPS.length)%STOPS.length; cur=i; const s=STOPS[i];
+  if(instant){ applyLimits(s); orbit.target.copy(s.target); camera.position.copy(s.target).add(new THREE.Vector3().setFromSphericalCoords(s.r,s.phi,s.th)); orbit.update(); }
+  else { sph.setFromVector3(camera.position.clone().sub(orbit.target));
+    let dth=s.th-sph.theta; dth=Math.atan2(Math.sin(dth),Math.cos(dth));
+    const dist=orbit.target.distanceTo(s.target)+Math.abs(sph.radius-s.r);
+    fly={t0:performance.now(), dur:THREE.MathUtils.clamp(900+dist*25,1000,2000), q0:orbit.target.clone(), q1:s.target.clone(), r0:sph.radius, r1:s.r, p0:sph.phi, p1:s.phi, t0a:sph.theta, dth};
+    openLimits(); orbit.enabled=false; }
+  document.querySelectorAll('#dots button').forEach((b,j)=>b.classList.toggle('on',j+1===i));
+  $('home').classList.toggle('on',i===0);
+  $('stopName').textContent=s.n;
+  pinEls.forEach((p,j)=>{ p.classList.toggle('cur',j===i); p.classList.toggle('hidelab',i!==0 && j!==i); });
+  renderCard();
+}
+function stepFly(now){
+  if(!fly) return; const t=Math.min((now-fly.t0)/fly.dur,1), e=ease.inout(t);
+  orbit.target.lerpVectors(fly.q0,fly.q1,e);
+  // arco: se aleja un poco a medio camino para dar contexto (constancia del objeto)
+  const lift=Math.sin(Math.PI*e)*Math.min(10,fly.q0.distanceTo(fly.q1)*0.35);
+  const r=THREE.MathUtils.lerp(fly.r0,fly.r1,e)+lift, ph=THREE.MathUtils.lerp(fly.p0,fly.p1,e), th=fly.t0a+fly.dth*e;
+  camera.position.copy(orbit.target).add(new THREE.Vector3().setFromSphericalCoords(r,ph,th));
+  camera.lookAt(orbit.target);
+  if(t>=1){ fly=null; applyLimits(STOPS[cur]); orbit.enabled=true; orbit.update(); }
+}
+// tarjeta del punto
+function renderCard(){
+  const s=STOPS[cur], el=$('card');
+  if(s.k==='general'){
+    const a=OPT.good.kpi, b=OPT.best.kpi;
+    el.innerHTML=`<div class="eyebrow">Vista general · ${STOPS.length-1} espacios</div><h3>El Jalisciense · Piso 29</h3><p>${s.d}</p>
+      <table class="sp"><tr><th></th><th class="${option==='good'?'cur':''}">Good</th><th class="${option==='best'?'cur':''}">Best</th></tr>
+      <tr><td>Asientos</td><td class="${option==='good'?'cur':''}">${a.asientos}</td><td class="${option==='best'?'cur':''}">${b.asientos}</td></tr>
+      <tr><td>Huella de mobiliario</td><td class="${option==='good'?'cur':''}">${fmt(a.huella_m2,1)} m²</td><td class="${option==='best'?'cur':''}">${fmt(b.huella_m2,1)} m²</td></tr>
+      <tr><td>Rutas con paso ≥ 0.90 m</td><td class="${option==='good'?'cur':''}">${fmt(a.rutas_090_pct)} %</td><td class="${option==='best'?'cur':''}">${fmt(b.rutas_090_pct)} %</td></tr></table>`;
+    return; }
+  const a=OPT.good.kpi.por_espacio[s.k], b=OPT.best.kpi.por_espacio[s.k];
+  const c=k=>option===k?'cur':'';
+  const row=(l,f)=>`<tr><td>${l}</td><td class="${c('good')}">${f(a)}</td><td class="${c('best')}">${f(b)}</td></tr>`;
+  const d=b.ocupacion_pct-a.ocupacion_pct;
+  let take = Math.abs(d)>=3 ? `Best ocupa ${fmt(Math.abs(d),0)} pts ${d<0?'menos':'más'} de piso que Good (${fmt(b.huella_m2,1)} contra ${fmt(a.huella_m2,1)} m² de muebles).` : `Ocupación parecida en las dos opciones.`;
+  if(a.asientos!==b.asientos) take+=` Good tiene ${a.asientos} asientos y Best ${b.asientos}.`;
+  el.innerHTML=`<div class="eyebrow">${cur} / ${STOPS.length-1} · ${fmt(a.area_m2,0)} m²</div><h3>${s.n}</h3><p>${s.d}</p>
+    <table class="sp"><tr><th></th><th class="${c('good')}">Good</th><th class="${c('best')}">Best</th></tr>
+    ${row('Asientos',v=>v.asientos)}${row('Piso ocupado por muebles',v=>fmt(v.ocupacion_pct,0)+' %')}${row('Piso libre con paso ≥ 0.90 m',v=>v.paso_090_pct!=null?fmt(v.paso_090_pct,0)+' %':'–')}${row('m² por asiento',v=>fmt(v.m2_por_asiento,1))}</table>
+    <div class="take">${take}</div>`;
+}
+// pines numerados en 3D
+const pins=new THREE.Group(); scene.add(pins); const pinEls=[];
+STOPS.forEach((s,i)=>{ const el=document.createElement('button'); el.className='pin'; el.type='button';
+  el.innerHTML=i===0?'':`<i>${i}</i><span>${s.n}</span>`; el.setAttribute('aria-label',s.n); el.onclick=e=>{ e.stopPropagation(); stopPlay(); goStop(i); };
+  pinEls.push(el); if(i===0){ el.style.display='none'; }
+  const o=new CSS2DObject(el); o.position.copy(P2W(s.at[0],s.at[1],3.1)); pins.add(o); });
+// barra
+const dotsEl=$('dots');
+STOPS.forEach((s,i)=>{ if(i===0) return; const b=document.createElement('button'); b.textContent=i; b.title=s.n; b.setAttribute('aria-label',s.n); b.onclick=()=>{stopPlay();goStop(i);}; dotsEl.appendChild(b); });
+$('home').onclick=()=>{stopPlay();goStop(0);};
+$('prev').onclick=()=>{stopPlay();goStop(cur-1);};
+$('next').onclick=()=>{stopPlay();goStop(cur+1);};
+// recorrido automático
+let playT=null;
+function stopPlay(){ if(!playT) return; clearInterval(playT); playT=null; $('play').classList.remove('on'); $('playIco').setAttribute('d','M7 4l13 8-13 8z'); }
+function startPlay(){ $('play').classList.add('on'); $('playIco').setAttribute('d','M6 4h4v16H6zM14 4h4v16h-4z'); goStop(cur+1); playT=setInterval(()=>goStop(cur+1),7000); }
+$('play').onclick=()=>playT?stopPlay():startPlay();
+canvas.addEventListener('pointerdown',()=>{ stopPlay(); hideHint(); });
+canvas.addEventListener('wheel',()=>{ stopPlay(); hideHint(); },{passive:true});
+// mantener activos los dots (goStop los marca vía querySelectorAll)
+addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return;
+  if(e.code==='ArrowRight'){stopPlay();goStop(cur+1);} else if(e.code==='ArrowLeft'){stopPlay();goStop(cur-1);}
+  else if(e.code==='KeyH'||e.code==='Home'){stopPlay();goStop(0);} else if(e.code==='KeyG') showOption('good'); else if(e.code==='KeyB') showOption('best'); });
+
+// ---------- comparar (cortina)
+let compare=false, splitX=0.5, splitDrag=false;
+const split=$('split');
+function setCompare(on){ compare=on; $('cmp').classList.toggle('on',on); split.style.display=on?'block':'none'; $('tagL').style.display=$('tagR').style.display=on?'block':'none'; placeSplit(); }
+function placeSplit(){ const x=innerWidth*splitX; split.style.left=(x-1)+'px'; $('tagL').style.left=(x-70)+'px'; $('tagR').style.left=(x+12)+'px'; }
+split.addEventListener('pointerdown',e=>{ splitDrag=true; split.setPointerCapture(e.pointerId); });
+split.addEventListener('pointermove',e=>{ if(!splitDrag) return; splitX=THREE.MathUtils.clamp(e.clientX/innerWidth,0.08,0.92); placeSplit(); });
+split.addEventListener('pointerup',()=>splitDrag=false);
+function visOpt(o){ for(const s of swaps){ for(const [n,k] of [[s.g,'good'],[s.b,'best']]) if(n){ n.visible=o===k; n.scale.set(1,1,1); n.position.y=0; } } }
+
+// ---------- ayuda
+function showHint(){ $('hint').classList.remove('hide'); }
+function hideHint(){ $('hint').classList.add('hide'); try{ localStorage.setItem('elj_hint','1'); }catch(e){} }
+$('hintOk').onclick=hideHint; $('helpBtn').onclick=showHint; $('hint').onclick=e=>{ if(e.target.id==='hint') hideHint(); };
+
+// ---------- UI
+$('oGood').onclick=()=>showOption('good'); $('oBest').onclick=()=>showOption('best');
+$('cmp').onclick=()=>setCompare(!compare);
+$('kpiBtn').onclick=()=>{ $('kpi').classList.toggle('show'); $('aside').classList.remove('show'); };
+$('layBtn').onclick=()=>{ $('aside').classList.toggle('show'); $('kpi').classList.remove('show'); };
+document.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{ layer=b.dataset.l; updateLayer(); });
+document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>applyStyle(b.dataset.s));
+
+function resize(){ renderer.setSize(innerWidth,innerHeight,false); labelR.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight;
+  camera.fov = camera.aspect<0.8 ? 60 : 45;
+  if(camera.aspect<0.8) camera.setViewOffset(innerWidth,innerHeight,0,Math.round(innerHeight*0.15),innerWidth,innerHeight); else camera.clearViewOffset();   // móvil: el modelo arriba de la tarjeta
+  camera.updateProjectionMatrix(); placeSplit(); }
+addEventListener('resize',resize); resize();
+
+applyStyle('maq'); setClip(); showOption('good',true); updateLayer(); renderKPI();
+goStop(+params.get('poi')||0,true);
+if(params.get('op')==='best') showOption('best',true); if(params.get('cmp')) setCompare(true);
+$('load').classList.add('hide');
+let seen=false; try{ seen=!!localStorage.getItem('elj_hint'); }catch(e){}
+if(!seen && !params.has('nohint')) setTimeout(showHint,500);
+
+renderer.setAnimationLoop(()=>{
+  const now=performance.now();
+  stepAnim(now); stepFly(now);
+  if(!fly) orbit.update();
+  if(compare){
+    const W=innerWidth, H=innerHeight, x=Math.round(W*splitX);
+    renderer.setScissorTest(true);
+    visOpt('good'); renderer.setScissor(0,0,x,H); renderer.setViewport(0,0,W,H); renderer.render(scene,camera);
+    visOpt('best'); renderer.setScissor(x,0,W-x,H); renderer.render(scene,camera);
+    renderer.setScissorTest(false); visOpt(option);
+  } else renderer.render(scene,camera);
+  labelR.render(scene,camera);
+});
+window.__elj={THREE,scene,camera,renderer,orbit,showOption,setCompare,goStop,applyStyle,data,get cur(){return cur;}};
+</script>
+</body>
+</html>
