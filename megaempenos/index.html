@@ -108,6 +108,33 @@
     #hint .g{grid-template-columns:1fr}
   }
   @media (max-width:480px){ .ttl{display:none} header{justify-content:space-between} .spacer{display:none} .btn.mtoggle,#helpBtn{padding:9px 9px} }
+  /* ---- móvil: hoja inferior ---- */
+  body.mob header{height:48px;padding:0 12px;gap:8px}
+  body.mob .ttl{display:flex!important} body.mob .ttl .eyebrow{display:none} body.mob .ttl b{font-size:15px}
+  body.mob .mtoggle,body.mob #kpiBtn{display:none!important}
+  body.mob #helpBtn{padding:7px 11px}
+  body.mob #wm{top:13px;right:58px;bottom:auto;width:70px;opacity:.85}
+  #sheet{position:fixed;left:0;right:0;bottom:0;z-index:12;background:#fff;border-radius:14px 14px 0 0;box-shadow:0 -6px 24px rgba(0,0,0,.12);display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom);overflow:hidden}
+  #grab{height:22px;flex:0 0 auto;display:grid;place-items:center;cursor:grab;touch-action:none}
+  #grab i{display:block;width:40px;height:5px;border-radius:3px;background:#c9c9c9}
+  body.mob #tour{position:static;transform:none;border:0;box-shadow:none;padding:0 6px 4px;gap:2px;justify-content:space-between}
+  body.mob #dots{display:none}
+  body.mob #stopName{display:block!important;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;text-align:left;font-size:15px;padding:0 6px}
+  body.mob #home .t,body.mob #play .t{display:none}
+  body.mob .tb{height:44px;min-width:44px;padding:0 10px}
+  #tabs{display:flex;gap:6px;padding:4px 12px 10px;border-bottom:1px solid var(--line2);flex:0 0 auto}
+  #tabs button{flex:1;height:36px;border:1px solid #b8b8b8;background:#fff;border-radius:18px;font:500 13px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink)}
+  #tabs button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  #shBody{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  #sheet[data-state="peek"] #shBody{visibility:hidden}
+  body.mob #card,body.mob aside.left,body.mob #kpi{position:static;left:auto;right:auto;top:auto;bottom:auto;width:auto;max-height:none;overflow:visible;border:0;border-radius:0;box-shadow:none;padding:14px 16px 24px}
+  body.mob #card{position:relative}
+  body.mob #card p{display:block}
+  body.mob #card .rend{max-height:none;aspect-ratio:16/9}
+  body.mob .pin span{display:none} body.mob .pin.cur span{display:inline-block}
+  body.mob .pin i{width:24px;height:24px;font-size:11px}
+  body.mob .lab{font-size:10px;padding:3px 6px} body.mob .lab b{font-size:10px} body.mob .lab span{display:none}
+  body.mob #hint .g{grid-template-columns:1fr;gap:10px} body.mob #hint svg{width:28px;height:28px}
   #err{position:fixed;left:12px;right:12px;bottom:12px;z-index:30;background:#b3261e;color:#fff;padding:10px 12px;border-radius:3px;font-size:12px;display:none}
 </style>
 </head>
@@ -151,6 +178,6 @@
 <div id="load"><div class="in"><div class="eyebrow">PLAGO VR</div><div style="font-size:20px;font-weight:600;margin-top:4px">MEGAEMPEÑOS · Oficinas</div><div id="ltxt" style="color:var(--ink2);margin-top:6px">Cargando maqueta…</div><div class="bar"><i id="lbar"></i></div></div></div>
 <div id="err"></div>
 <script>window.addEventListener('error',e=>{const d=document.getElementById('err');d.style.display='block';d.textContent='Error: '+(e.message||e.error);});window.addEventListener('unhandledrejection',e=>{const d=document.getElementById('err');d.style.display='block';d.textContent='Error: '+(e.reason&&e.reason.message||e.reason);});</script>
-<script src="app.js?v=2"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>
