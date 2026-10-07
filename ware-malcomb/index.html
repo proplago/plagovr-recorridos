@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>El Jalisciense · Piso 29 — Opciones de mobiliario</title>
-<meta name="description" content="Maqueta interactiva: comparación de las opciones GOOD y BEST de mobiliario con estudios de ocupación, holgura, tráfico y luz natural.">
+<title>Ware Malcomb Piso 10</title>
+<meta name="description" content="Maqueta interactiva del piso 10 de Ware Malcomb en la Ciudad de México, con el mobiliario propuesto y estudios de zonas, holgura, tráfico y luz natural.">
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" href="brand/plagovr.png">
 <style>
@@ -19,14 +19,10 @@
   .eyebrow{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);font-weight:600}
   .ttl b{font-size:20px;font-weight:600;letter-spacing:-.01em}
   .spacer{flex:1}
-  .seg{display:inline-flex;border:1px solid var(--ink);border-radius:3px;overflow:hidden}
-  .seg button{background:var(--paper);color:var(--ink);border:0;border-right:1px solid var(--ink);padding:10px 20px;font:600 13px/1 inherit;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;min-width:86px}
-  .seg button:last-child{border-right:0}
-  .seg button.on{background:var(--ink);color:#fff}
   .btn{background:var(--paper);border:1px solid var(--ink);border-radius:3px;padding:9px 14px;font:500 13px/1 inherit;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
   .btn.on{background:var(--ink);color:#fff}
-  .btn:focus-visible,.seg button:focus-visible,.chip:focus-visible,.tb:focus-visible,.pin:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-  aside.left{position:fixed;left:16px;top:80px;width:232px;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:16px;z-index:9;max-height:calc(100vh - 300px);overflow:auto}
+  .btn:focus-visible,.chip:focus-visible,.tb:focus-visible,.pin:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+  aside.left{position:fixed;left:16px;top:80px;width:232px;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:16px;z-index:9;max-height:calc(100vh - 330px);overflow:auto}
   aside.left h4,#kpi h4{margin:14px 0 8px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);font-weight:600}
   aside.left h4:first-child{margin-top:0}
   .chips{display:flex;flex-wrap:wrap;gap:6px}
@@ -42,33 +38,32 @@
   .row .l{font-size:13px;color:var(--ink2)}
   .row .v{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
   .row .v small{font-size:12px;font-weight:600;margin-left:6px}
-  .up{color:var(--up)} .down{color:var(--down)} .eq{color:var(--mute)}
+  .row .r{display:block;font-size:11.5px;color:var(--mute);margin-top:2px}
+  .ok{color:var(--up)} .warn{color:#b26a00}
   table.sp{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px}
   table.sp th{text-align:right;padding:6px 0 6px 10px;font-weight:600;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line)}
   table.sp th:first-child,table.sp td:first-child{text-align:left;padding-left:0}
   table.sp td{text-align:right;padding:7px 0 7px 10px;border-bottom:1px solid var(--line2);font-variant-numeric:tabular-nums}
-  table.sp td.cur,table.sp th.cur{color:var(--ink);font-weight:600}
+  table.sp td.cur{color:var(--ink);font-weight:600}
   .note{font-size:11.5px;color:var(--mute);margin-top:10px}
   .note a{color:var(--acc);text-decoration:none}
   details{margin-top:8px} summary{cursor:pointer;font-size:12px;color:var(--ink2)}
   details ul{padding-left:16px;margin:6px 0;font-size:11.5px;color:var(--mute)}
-  /* tarjeta del punto de interés */
-  #card{position:fixed;left:16px;bottom:88px;width:340px;max-height:calc(100vh - 170px);overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:16px 18px 12px;z-index:10;transition:opacity .25s,transform .25s}
-  #card.fade{opacity:0;transform:translateY(6px)}
+  #card{position:fixed;left:16px;bottom:88px;width:360px;max-height:calc(100vh - 170px);overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:16px 18px 12px;z-index:10}
   #card h3{margin:4px 0 4px;font-size:20px;font-weight:600;letter-spacing:-.01em}
   #card p{margin:0 0 8px;color:var(--ink2);font-size:13px}
   #card .take{margin-top:8px;font-size:12.5px;color:var(--ink);border-left:2px solid var(--acc);padding-left:8px}
-  /* barra de recorrido */
+  #card .rend{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:2px;margin:6px 0 8px;cursor:zoom-in;background:var(--band)}
+  #card .rcap{font-size:11px;color:var(--mute);margin:-4px 0 6px}
   #tour{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:6px;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,.06)}
   .tb{background:var(--paper);border:1px solid transparent;border-radius:3px;height:40px;min-width:40px;padding:0 12px;font:500 13px/1 inherit;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}
   .tb:hover{border-color:var(--line)}
   .tb.on{background:var(--ink);color:#fff}
   .tb svg{width:16px;height:16px}
   #dots{display:flex;gap:4px;padding:0 6px;border-left:1px solid var(--line2);border-right:1px solid var(--line2)}
-  #dots button{width:34px;height:34px;border-radius:50%;border:1px solid #b8b8b8;background:#fff;font:600 12px/1 inherit;color:var(--ink);cursor:pointer}
+  #dots button{width:32px;height:32px;border-radius:50%;border:1px solid #b8b8b8;background:#fff;font:600 12px/1 inherit;color:var(--ink);cursor:pointer}
   #dots button.on{background:var(--ink);border-color:var(--ink);color:#fff}
-  #stopName{font-size:13px;font-weight:600;min-width:150px;text-align:center;padding:0 6px;white-space:nowrap}
-  /* pines 3D */
+  #stopName{font-size:13px;font-weight:600;min-width:170px;text-align:center;padding:0 6px;white-space:nowrap}
   .pin{pointer-events:auto;display:flex;align-items:center;gap:6px;background:none;border:0;padding:0;cursor:pointer;transform:translateY(-14px)}
   .pin i{font-style:normal;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:600 12px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;box-shadow:0 0 0 3px rgba(255,255,255,.9)}
   .pin span{background:#fff;color:var(--ink);font:600 12px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;padding:6px 8px;border-radius:3px;border:1px solid var(--ink);white-space:nowrap}
@@ -78,11 +73,8 @@
   .lab{font:12px/1.2 "Helvetica Neue",Helvetica,Arial,sans-serif;background:#fff;border:1px solid var(--ink);padding:5px 8px;border-radius:3px;white-space:nowrap;color:var(--ink);transform:translateY(-8px)}
   .lab b{display:block;font-weight:600;font-size:12px}
   .lab span{color:var(--ink2);font-size:11px}
-  #split{position:fixed;top:64px;bottom:0;width:2px;background:var(--ink);z-index:8;display:none;cursor:ew-resize;touch-action:none}
-  #split span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--ink);color:#fff;font:600 11px/1 inherit;letter-spacing:.05em;padding:9px 10px;border-radius:3px;white-space:nowrap}
-  .tag{position:fixed;top:78px;z-index:8;background:var(--ink);color:#fff;font:600 11px/1 inherit;letter-spacing:.06em;padding:6px 8px;border-radius:3px;display:none;text-transform:uppercase}
+  .lab.sm{padding:3px 6px}.lab.sm b{font-size:11px}
   #wm{position:fixed;right:18px;bottom:16px;z-index:11;width:128px;opacity:.9;pointer-events:none;user-select:none}
-  /* ayuda */
   #hint{position:fixed;inset:0;z-index:15;display:grid;place-items:center;background:rgba(25,25,25,.28);transition:opacity .3s}
   #hint.hide{opacity:0;pointer-events:none}
   #hint .in{background:#fff;border-radius:3px;padding:24px 26px 20px;width:min(560px,92vw)}
@@ -91,38 +83,66 @@
   #hint .g div{font-size:12.5px;color:var(--ink2)}
   #hint .g b{display:block;color:var(--ink);font-size:13px;margin:8px 0 2px}
   #hint svg{width:40px;height:40px;stroke:var(--ink);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  #lb{position:fixed;inset:0;z-index:16;background:rgba(15,15,15,.88);display:none;place-items:center;cursor:zoom-out}
+  #lb.show{display:grid}
+  #lb img{max-width:94vw;max-height:84vh;border-radius:2px}
+  #lb div{color:#ddd;font-size:12px;margin-top:10px;text-align:center}
   #load{position:fixed;inset:0;background:var(--paper);display:grid;place-items:center;z-index:20;transition:opacity .5s}
   #load.hide{opacity:0;pointer-events:none}
   #load .in{width:min(420px,80vw)}
   #load .bar{height:2px;background:var(--line);margin-top:14px}
   #load .bar i{display:block;height:100%;width:0;background:var(--ink);transition:width .2s}
-  .mtoggle{display:none}
+  .mtoggle{display:none} #kpiBtn{display:inline-flex} #kpi{display:none} #kpi.show{display:block}
   #card .x{position:absolute;right:8px;top:8px;width:30px;height:30px;border:0;background:none;font-size:20px;line-height:1;cursor:pointer;color:var(--ink2)}
   #card .chipsm{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--acc);border-radius:3px;padding:3px 6px;margin-right:6px}
-  #card .alt{margin-top:8px;font-size:12.5px;color:var(--ink2)} #card .alt a{color:var(--acc);cursor:pointer;text-decoration:none}
   #card .pend{margin-top:6px;font-size:11.5px;color:var(--mute)}
   @media (max-width:900px){
-    header{gap:8px;padding:0 10px;height:58px}.ttl b{font-size:15px}.ttl .eyebrow{display:none}#cmp{display:none}
-    .seg button{min-width:58px;padding:9px 10px}
+    header{gap:8px;padding:0 10px;height:58px}.ttl b{font-size:15px}.ttl .eyebrow{display:none}
     aside.left{top:66px;left:8px;right:8px;width:auto;max-height:44vh;display:none}aside.left.show{display:block}
     #kpi{top:66px;left:8px;right:8px;width:auto;max-height:56vh;display:none}#kpi.show{display:block}
     .mtoggle{display:inline-flex;padding:9px 10px}
-    #card{left:8px;right:8px;width:auto;bottom:70px;padding:12px 14px 8px}#card h3{font-size:17px}#card p{display:none}
+    #card{left:8px;right:8px;width:auto;bottom:70px;padding:12px 14px 8px;max-height:38vh}#card h3{font-size:17px}#card p{display:none}#card .rend{max-height:18vh}
     #tour{left:8px;right:8px;transform:none;bottom:8px;justify-content:space-between}
-    #stopName,#play .t,#home .t{display:none}#dots button{width:30px;height:30px}
+    #stopName,#play .t,#home .t{display:none}#dots{overflow-x:auto}#dots button{width:28px;height:28px;flex:0 0 auto}
     #wm{width:84px;top:66px;bottom:auto;right:10px;opacity:.8}
     #hint .g{grid-template-columns:1fr}
   }
   @media (max-width:480px){ .ttl{display:none} header{justify-content:space-between} .spacer{display:none} .btn.mtoggle,#helpBtn{padding:9px 9px} }
+  /* ---- móvil: hoja inferior ---- */
+  body.mob header{height:48px;padding:0 12px;gap:8px}
+  body.mob .ttl{display:flex!important} body.mob .ttl .eyebrow{display:none} body.mob .ttl b{font-size:15px}
+  body.mob .mtoggle,body.mob #kpiBtn{display:none!important}
+  body.mob #helpBtn{padding:7px 11px}
+  body.mob #wm{top:13px;right:58px;bottom:auto;width:70px;opacity:.85}
+  #sheet{position:fixed;left:0;right:0;bottom:0;z-index:12;background:#fff;border-radius:14px 14px 0 0;box-shadow:0 -6px 24px rgba(0,0,0,.12);display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom);overflow:hidden}
+  #grab{height:22px;flex:0 0 auto;display:grid;place-items:center;cursor:grab;touch-action:none}
+  #grab i{display:block;width:40px;height:5px;border-radius:3px;background:#c9c9c9}
+  body.mob #tour{position:static;transform:none;border:0;box-shadow:none;padding:0 6px 4px;gap:2px;justify-content:space-between}
+  body.mob #dots{display:none}
+  body.mob #stopName{display:block!important;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;text-align:left;font-size:15px;padding:0 6px}
+  body.mob #home .t,body.mob #play .t{display:none}
+  body.mob .tb{height:44px;min-width:44px;padding:0 10px}
+  #tabs{display:flex;gap:6px;padding:4px 12px 10px;border-bottom:1px solid var(--line2);flex:0 0 auto}
+  #tabs button{flex:1;height:36px;border:1px solid #b8b8b8;background:#fff;border-radius:18px;font:500 13px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink)}
+  #tabs button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  #shBody{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  #sheet[data-state="peek"] #shBody{visibility:hidden}
+  body.mob #card,body.mob aside.left,body.mob #kpi{position:static;left:auto;right:auto;top:auto;bottom:auto;width:auto;max-height:none;overflow:visible;border:0;border-radius:0;box-shadow:none;padding:14px 16px 24px}
+  body.mob #card{position:relative}
+  body.mob #card p{display:block}
+  body.mob #card .rend{max-height:none;aspect-ratio:16/9}
+  body.mob .pin span{display:none} body.mob .pin.cur span{display:inline-block}
+  body.mob .pin i{width:24px;height:24px;font-size:11px}
+  body.mob .lab{font-size:10px;padding:3px 6px} body.mob .lab b{font-size:10px} body.mob .lab span{display:none}
+  body.mob #hint .g{grid-template-columns:1fr;gap:10px} body.mob #hint svg{width:28px;height:28px}
+  #err{position:fixed;left:12px;right:12px;bottom:12px;z-index:30;background:#b3261e;color:#fff;padding:10px 12px;border-radius:3px;font-size:12px;display:none}
 </style>
 </head>
 <body>
-<canvas id="c" tabindex="0" aria-label="Maqueta 3D interactiva del piso 29"></canvas>
+<canvas id="c" tabindex="0" aria-label="Maqueta 3D interactiva del piso 10"></canvas>
 <header>
-  <div class="ttl"><span class="eyebrow">Maqueta interactiva · Piso 29</span><b>El Jalisciense</b></div>
+  <div class="ttl"><span class="eyebrow">Maqueta interactiva · Ciudad de México · Piso 10</span><b>Ware Malcomb</b></div>
   <div class="spacer"></div>
-  <div class="seg" role="group" aria-label="Opción de mobiliario"><button id="oGood" class="on">Good</button><button id="oBest">Best</button></div>
-  <button class="btn" id="cmp" title="Comparar las dos opciones con una cortina">Comparar</button>
   <button class="btn mtoggle" id="layBtn">Estudios</button>
   <button class="btn mtoggle" id="kpiBtn">Datos</button>
   <button class="btn" id="helpBtn" title="Cómo moverse" aria-label="Ayuda">?</button>
@@ -144,9 +164,8 @@
   <button class="tb" id="next" title="Siguiente (→)" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg></button>
   <button class="tb" id="play" title="Recorrido automático"><svg viewBox="0 0 24 24" fill="currentColor"><path id="playIco" d="M7 4l13 8-13 8z"/></svg><span class="t">Recorrido</span></button>
 </nav>
-<div id="split"><span>GOOD ⟷ BEST</span></div>
-<div class="tag" id="tagL">Good</div><div class="tag" id="tagR">Best</div>
 <img id="wm" src="brand/plagovr.png" alt="PLAGO VR">
+<div id="lb" role="dialog" aria-label="Render"><div><img id="lbImg" alt=""><div id="lbCap"></div></div></div>
 <div id="hint" class="hide" role="dialog" aria-label="Cómo moverse"><div class="in">
   <div class="eyebrow">Cómo moverse</div><h3>Tres gestos, nada más</h3>
   <div class="g">
@@ -156,43 +175,9 @@
   </div>
   <button class="btn on" id="hintOk">Entendido</button>
 </div></div>
-<div id="load"><div class="in"><div class="eyebrow">PLAGO VR</div><div style="font-size:20px;font-weight:600;margin-top:4px">El Jalisciense · Piso 29</div><div id="ltxt" style="color:var(--ink2);margin-top:6px">Cargando maqueta…</div><div class="bar"><i id="lbar"></i></div></div></div>
-
-<script>
-// diagnóstico y respaldo: 1) error → reintenta en modo ligero; 2) si vuelve a fallar → versión sin 3D (planos y datos)
-(function(){
-var q=location.search, SAFE=/[?&]safe/.test(q); try{ if(sessionStorage.getItem('elj_safe')) SAFE=true; }catch(e){}
-function msg(e){ return String((e&&(e.message||(e.reason&&e.reason.message)))||e||'').slice(0,200); }
-window.__fail=function(e){
-  if(window.__ok||window.__failed) return; window.__failed=true;
-  var m=msg(e), st=window.__stage||'inicio';
-  if(!SAFE){ try{ sessionStorage.setItem('elj_safe','1'); }catch(_){} location.replace(location.pathname+'?safe=1&from='+encodeURIComponent(st+': '+m)); return; }
-  window.__fallback(st+': '+m);
-};
-window.__fallback=function(why){
-  var L=document.getElementById('load'); if(!L) return;
-  L.style.overflow='auto'; L.style.placeItems='start center';
-  L.innerHTML='<div style="max-width:560px;padding:20px 16px;font:15px/1.45 Helvetica,Arial,sans-serif;color:#191919">'+
-   '<div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#8e8e8e;font-weight:600">PLAGO VR · El Jalisciense piso 29</div>'+
-   '<h2 style="margin:6px 0 6px;font-size:20px">Versión sin 3D</h2>'+
-   '<p style="color:#595959;margin:0 0 12px">Este navegador no pudo abrir la maqueta 3D. Aquí están los planos y los datos. Para la maqueta, ábrela en Chrome o Safari actualizados, o en una computadora.</p>'+
-   '<div id="fbk"></div><img src="data/zonas.png" alt="Zonas" style="width:100%;border:1px solid #e3e3e3;margin:10px 0">'+
-   '<div style="display:flex;gap:8px"><figure style="margin:0;flex:1"><img src="data/holgura_good.png" style="width:100%;border:1px solid #e3e3e3"><figcaption style="font-size:12px;color:#595959">Holgura Good</figcaption></figure>'+
-   '<figure style="margin:0;flex:1"><img src="data/holgura_best.png" style="width:100%;border:1px solid #e3e3e3"><figcaption style="font-size:12px;color:#595959">Holgura Best</figcaption></figure></div>'+
-   '<p style="font-size:11px;color:#b3261e;margin-top:14px">Detalle técnico: '+String(why).replace(/</g,'&lt;')+'</p>'+
-   '<p style="font-size:11px;color:#8e8e8e">'+navigator.userAgent+'</p>'+
-   '<a href="'+location.pathname+'?retry=1" onclick="try{sessionStorage.removeItem(\'elj_safe\')}catch(e){}" style="display:inline-block;margin-top:6px;padding:10px 14px;border:1px solid #191919;border-radius:3px;color:#191919;text-decoration:none">Reintentar 3D</a></div>';
-  var x=new XMLHttpRequest(); x.open('GET','data/analisis.json'); x.onload=function(){ try{ var d=JSON.parse(x.responseText), g=d.opciones.good.kpi, b=d.opciones.best.kpi;
-    var r=function(l,a,c){ return '<tr><td style="padding:6px 0;border-bottom:1px solid #e9e9e9">'+l+'</td><td style="text-align:right;border-bottom:1px solid #e9e9e9"><b>'+a+'</b></td><td style="text-align:right;border-bottom:1px solid #e9e9e9"><b>'+c+'</b></td></tr>'; };
-    document.getElementById('fbk').innerHTML='<table style="width:100%;border-collapse:collapse;font-size:14px"><tr><th></th><th style="text-align:right">GOOD</th><th style="text-align:right">BEST</th></tr>'+
-      r('Asientos',g.asientos,b.asientos)+r('Huella de mobiliario',g.huella_m2+' m²',b.huella_m2+' m²')+r('Rutas con paso ≥ 0.90 m',g.rutas_090_pct+' %',b.rutas_090_pct+' %')+r('Caminata mediana',g.caminata_mediana_m+' m',b.caminata_mediana_m+' m')+'</table>'; }catch(e){} }; x.send();
-};
-window.addEventListener('error',function(e){ if(!window.__ok) window.__fail(e.error||e.message); });
-window.addEventListener('unhandledrejection',function(e){ if(!window.__ok) window.__fail(e.reason); });
-try{ var c=document.createElement('canvas'); if(!c.getContext('webgl2')) setTimeout(function(){ window.__failed=true; window.__fallback('Este navegador no tiene WebGL 2 (necesario para el 3D).'); },0); }catch(e){}
-setTimeout(function(){ if(!window.__ok && !window.__failed) window.__fail('Tardó más de 60 s en la etapa “'+(window.__stage||'?')+'”'); },60000);
-})();
-</script>
-<script src="app.js?v=4"></script>
+<div id="load"><div class="in"><div class="eyebrow">PLAGO VR</div><div style="font-size:20px;font-weight:600;margin-top:4px">Ware Malcomb · Piso 10</div><div id="ltxt" style="color:var(--ink2);margin-top:6px">Cargando maqueta…</div><div class="bar"><i id="lbar"></i></div></div></div>
+<div id="err"></div>
+<script>window.addEventListener('error',e=>{const d=document.getElementById('err');d.style.display='block';d.textContent='Error: '+(e.message||e.error);});window.addEventListener('unhandledrejection',e=>{const d=document.getElementById('err');d.style.display='block';d.textContent='Error: '+(e.reason&&e.reason.message||e.reason);});</script>
+<script src="app.js?v=1"></script>
 </body>
 </html>
